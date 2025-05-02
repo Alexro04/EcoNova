@@ -15,8 +15,15 @@ const sizes = {
   `,
 };
 
+const types = {
+  primary: css``,
+  secondary: css``,
+  danger: css``,
+};
+
 const Button = styled.button`
   ${(props) => sizes[props.size]}
+  ${(props) => types[props.type]}
   border: 1px solid var(--color-grey-200);
   background-color: var(--color-grey-0);
 `;
