@@ -6,7 +6,7 @@ const ImageContainer = styled.div`
 `;
 
 const Img = styled.img`
-  width: 150px;
+  width: 120px;
 `;
 function Logo() {
   return (

@@ -1,15 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const StyledHeading = styled.header`
-  background-color: var(--color-grey-0);
+const Heading = styled.h1`
+  ${(props) =>
+    props.as === "h1" &&
+    css`
+      font-weight: 800;
+      font-size: 3rem;
+    `}
 `;
-
-function Heading() {
-  return (
-    <StyledHeading>
-      <h1>This is the real life</h1>
-    </StyledHeading>
-  );
-}
 
 export default Heading;

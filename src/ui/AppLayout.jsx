@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
-import Heading from "./Heading";
+import Heading from "./Header";
 import Sidebar from "./Sidebar";
 
 const Main = styled.main`
   background-color: var(--color-grey-50);
+  padding: 2.4rem 3.2rem;
+  overflow: scroll;
 `;
 
 const StyledAppLayout = styled.div`
@@ -15,13 +17,23 @@ const StyledAppLayout = styled.div`
   height: 100dvh;
 `;
 
+const Container = styled.div`
+  max-width: 120rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+`;
+
 function AppLayout() {
   return (
     <StyledAppLayout>
       <Heading />
       <Sidebar />
       <Main>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </Main>
     </StyledAppLayout>
   );
