@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAllCabins } from "../../services/apiCabins";
-
+import { useState } from "react";
 import styled from "styled-components";
+
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import CreateCabinForm from "./CreateCabinForm";
+import useCabin from "./useCabin";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -30,10 +31,9 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
-  const { data, isPending } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: getAllCabins,
-  });
+  const [selectedCabin, setSelectedCabin] = useState(null);
+
+  const { data: cabins, isPending } = useCabin();
 
   if (isPending) return <Spinner />;
   return (
@@ -46,8 +46,21 @@ function CabinTable() {
         <div>Discount</div>
         <div></div>
       </TableHeader>
-      {data.data.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin._id} />
+      {cabins.data.map((cabin) => (
+        <>
+          <CabinRow
+            cabin={cabin}
+            key={cabin._id}
+            selectedCabin={selectedCabin}
+            setSelectedCabin={setSelectedCabin}
+          />
+          {selectedCabin === cabin._id && (
+            <CreateCabinForm
+              cabin={cabin}
+              setSelectedCabin={setSelectedCabin}
+            />
+          )}
+        </>
       ))}
     </Table>
   );
