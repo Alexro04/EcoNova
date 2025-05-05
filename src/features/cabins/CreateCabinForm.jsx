@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCabin } from "../../services/apiCabins";
+import { addCabin, editCabin as editCabinApi } from "../../services/apiCabins";
 import { formatCurrency } from "../../utils/helpers";
 
 import Input from "../../ui/Input";
@@ -20,10 +20,11 @@ const FormRowAction = styled.div`
   }
 `;
 
-function CreateCabinForm() {
+function CreateCabinForm({ cabin }) {
   const { register, handleSubmit, reset, formState, getValues } = useForm();
   const queryClient = useQueryClient();
   const { errors } = formState;
+  const isEditSession = cabin !== undefined;
 
   const { mutate, isPending: isUploading } = useMutation({
     mutationFn: (data) =>
@@ -38,8 +39,22 @@ function CreateCabinForm() {
     },
   });
 
+  const { mutate: editCabin, isPending: isEditing } = useMutation({
+    mutationFn: (data) =>
+      toast.promise(() => editCabinApi(data, cabin._id), {
+        success: "Cabin updated successfully",
+        loading: "Updating cabin...",
+        error: "Cabin could not be updated",
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cabins"] });
+    },
+  });
+  const isLoading = isUploading || isEditing;
+
   function submitForm(data) {
-    mutate(data);
+    if (isEditSession) editCabin(data);
+    else mutate(data);
   }
 
   return (
@@ -48,7 +63,8 @@ function CreateCabinForm() {
         <Input
           type="text"
           id="name"
-          disabled={isUploading}
+          disabled={isLoading}
+          defaultValue={cabin?.name || ""}
           {...register("name", { required: "This field is required" })}
         />
       </FormRow>
@@ -57,7 +73,8 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="capacity"
-          disabled={isUploading}
+          disabled={isLoading}
+          defaultValue={cabin?.capacity || ""}
           {...register("capacity", {
             required: "This field is required",
             min: {
@@ -71,8 +88,9 @@ function CreateCabinForm() {
       <FormRow label="Regular price" error={errors?.price?.message}>
         <Input
           type="number"
-          disabled={isUploading}
+          disabled={isLoading}
           id="price"
+          defaultValue={cabin?.price || ""}
           {...register("price", {
             required: "This field is required",
             min: {
@@ -89,8 +107,8 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="discount"
-          defaultValue={0}
-          disabled={isUploading}
+          defaultValue={cabin?.discount || 0}
+          disabled={isLoading}
           {...register("discount", {
             validate: (value) => Number(value) <= Number(getValues().price),
           })}
@@ -103,8 +121,8 @@ function CreateCabinForm() {
         <Textarea
           type="number"
           id="description"
-          disabled={isUploading}
-          defaultValue=""
+          disabled={isLoading}
+          defaultValue={cabin?.description || ""}
           {...register("description", { required: "This field is required" })}
         />
       </FormRow>
@@ -114,11 +132,19 @@ function CreateCabinForm() {
           type="file"
           id="image"
           accept="image/*"
-          disabled={isUploading}
+          disabled={isLoading}
           multiple
-          {...register("cabinImages", { required: "This field is required" })}
+          {...register("cabinImages", {
+            required: isEditSession ? false : "This field is required",
+          })}
         />
       </FormRow>
+      {isEditSession && (
+        <p>
+          *Note that uploading new files will completely overwrite the current
+          ones
+        </p>
+      )}
 
       <FormRowAction>
         {/* type is an HTML attribute! */}
@@ -126,11 +152,11 @@ function CreateCabinForm() {
           type="reset"
           variation="secondary"
           size="medium"
-          disabled={isUploading}>
+          disabled={isLoading}>
           Cancel
         </Button>
-        <Button variation="primary" size="medium" disabled={isUploading}>
-          Create cabin
+        <Button variation="primary" size="medium" disabled={isLoading}>
+          {isEditSession ? "Edit cabin" : "Create cabin"}
         </Button>
       </FormRowAction>
     </Form>
