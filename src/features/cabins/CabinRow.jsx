@@ -1,8 +1,13 @@
-import styled from "styled-components";
-import { formatCurrency } from "../../utils/helpers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HiOutlineDuplicate, HiOutlineTrash } from "react-icons/hi";
+import { HiOutlinePencil } from "react-icons/hi2";
+import styled from "styled-components";
+
+import CreateCabinForm from "./CreateCabinForm";
+import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import useCreateCabin from "./useCreateCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -46,6 +51,7 @@ const Discount = styled.div`
 function CabinRow({ cabin, selectedCabin, setSelectedCabin }) {
   const { name, price, _id, discount, cabinPictures, capacity } = cabin;
   const queryClient = useQueryClient();
+  const { mutate: createCabin } = useCreateCabin();
 
   function handleToggleEditForm(id) {
     if (selectedCabin === id) setSelectedCabin(null);
@@ -66,6 +72,16 @@ function CabinRow({ cabin, selectedCabin, setSelectedCabin }) {
     },
   });
 
+  function handleDuplicateCabin() {
+    const data = {
+      ...cabin,
+      name: `${cabin.name}-copy`,
+      cabinPictures: JSON.stringify(cabin.cabinPictures),
+    };
+    console.log(data);
+    createCabin(data);
+  }
+
   return (
     <>
       <TableRow>
@@ -75,12 +91,20 @@ function CabinRow({ cabin, selectedCabin, setSelectedCabin }) {
         <Price>{formatCurrency(price)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
         <div>
-          <button onClick={() => handleToggleEditForm(_id)}>Edit</button>
+          <button onClick={handleDuplicateCabin}>
+            <HiOutlineDuplicate />
+          </button>
+          <button onClick={() => handleToggleEditForm(_id)}>
+            <HiOutlinePencil />
+          </button>
           <button onClick={() => mutate(_id)} disabled={isDeleting}>
-            {isDeleting ? "Deleting..." : "delete"}
+            {isDeleting ? "Deleting..." : <HiOutlineTrash />}
           </button>
         </div>
       </TableRow>
+      {selectedCabin === cabin._id && (
+        <CreateCabinForm cabin={cabin} setSelectedCabin={setSelectedCabin} />
+      )}
     </>
   );
 }

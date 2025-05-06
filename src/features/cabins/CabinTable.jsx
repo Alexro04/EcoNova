@@ -47,20 +47,12 @@ function CabinTable() {
         <div></div>
       </TableHeader>
       {cabins.data.map((cabin) => (
-        <>
-          <CabinRow
-            cabin={cabin}
-            key={cabin._id}
-            selectedCabin={selectedCabin}
-            setSelectedCabin={setSelectedCabin}
-          />
-          {selectedCabin === cabin._id && (
-            <CreateCabinForm
-              cabin={cabin}
-              setSelectedCabin={setSelectedCabin}
-            />
-          )}
-        </>
+        <CabinRow
+          cabin={cabin}
+          key={cabin._id}
+          selectedCabin={selectedCabin}
+          setSelectedCabin={setSelectedCabin}
+        />
       ))}
     </Table>
   );
