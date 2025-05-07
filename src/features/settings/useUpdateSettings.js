@@ -5,13 +5,14 @@ import toast from "react-hot-toast";
 export default function useUpdateSettings() {
   const queryClient = useQueryClient();
   const { mutate: updateSettings, isPending: isUpdating } = useMutation({
-    mutationFn: toast.promise((data) => updateSettingsApi(data), {
-      success: "Settings uploaded successfully",
-      loading: "Updating settings...",
-      error: "Settings could not be updated",
-    }),
+    mutationFn: (data) =>
+      toast.promise(updateSettingsApi(data), {
+        success: "Settings updated successfully",
+        loading: "Updating settings...",
+        error: "Settings could not be updated",
+      }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
+      queryClient.invalidateQueries({ queryKey: ["settings"] });
     },
   });
 

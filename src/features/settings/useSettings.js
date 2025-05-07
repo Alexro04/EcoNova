@@ -5,11 +5,11 @@ export default function useSetting() {
   const {
     isPending: isLoading,
     error,
-    data: settings,
+    data,
   } = useQuery({
     queryKey: ["settings"],
     queryFn: getSettings,
   });
 
-  return { isLoading, error, settings };
+  return { isLoading, error, settings: data?.data };
 }
