@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Line from "../ui/Line";
 import Heading from "../ui/Heading";
 import CabinTable from "../features/cabins/CabinTable";
@@ -13,7 +12,6 @@ const ButtonContainer = styled.div`
 `;
 
 function Cabins() {
-  const [showForm, setShowForm] = useState(false);
   return (
     <>
       <Line type="horizontal">
@@ -23,18 +21,17 @@ function Cabins() {
       <Line type="vertical">
         <CabinTable />
         <ButtonContainer>
-          <Button
-            variation={showForm ? "secondary" : "primary"}
-            size="large"
-            onClick={() => setShowForm((curr) => !curr)}>
-            {showForm ? "Close Form" : "Add Cabin"}
-          </Button>
-        </ButtonContainer>
-        {showForm && (
           <Modal>
-            <CreateCabinForm />
+            <Modal.Open opens="add-cabin">
+              <Button variation="primary" size="large">
+                Add Cabin
+              </Button>
+            </Modal.Open>
+            <Modal.Window name="add-cabin">
+              <CreateCabinForm />
+            </Modal.Window>
           </Modal>
-        )}
+        </ButtonContainer>
       </Line>
     </>
   );

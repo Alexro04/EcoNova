@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
+import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -53,26 +54,38 @@ const Button = styled.button`
 const ModalContext = createContext();
 
 function Modal({ children }) {
-  const { isOpen, setIsOpen } = useState("");
+  const [selectedWindow, setSelectedWindow] = useState("");
+
+  const closeWindow = () => setSelectedWindow("");
+  const openWindow = setSelectedWindow;
 
   return (
-    <ModalContext.Provider value={(isOpen, setIsOpen)}>
+    <ModalContext.Provider value={{ selectedWindow, closeWindow, openWindow }}>
       {children}
     </ModalContext.Provider>
   );
 }
 
-function Open({ children }) {
-  return children;
+function Open({ children, opens }) {
+  const { openWindow } = useContext(ModalContext);
+  return cloneElement(children, { onClick: () => openWindow(opens) });
 }
 
-function Window({ children }) {
-  const { isOpen } = useContext(ModalContext);
+function Window({ children, name }) {
+  const { selectedWindow, closeWindow } = useContext(ModalContext);
   return (
-    isOpen && (
+    selectedWindow === name &&
+    createPortal(
       <Overlay>
-        <StyledModal>{children}</StyledModal>
-      </Overlay>
+        <StyledModal>
+          <Button onClick={closeWindow}>X</Button>
+          {cloneElement(children, {
+            onCloseWindow: closeWindow,
+          })}
+        </StyledModal>
+      </Overlay>,
+      document.body,
+      "modal-window"
     )
   );
 }

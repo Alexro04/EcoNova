@@ -19,7 +19,7 @@ const FormRowAction = styled.div`
   }
 `;
 
-function CreateCabinForm({ cabin, setSelectedCabin }) {
+function CreateCabinForm({ cabin, onCloseWindow }) {
   const { register, handleSubmit, reset, formState, getValues } = useForm();
   const { errors } = formState;
   const isEditSession = cabin !== undefined;
@@ -28,13 +28,14 @@ function CreateCabinForm({ cabin, setSelectedCabin }) {
   const isLoading = isCreating || isEditing;
 
   function submitForm(data) {
-    if (isEditSession)
-      editCabin(data, { onSuccess: () => setSelectedCabin(null) });
+    if (isEditSession) editCabin(data, { onSuccess: () => onCloseWindow() });
     else createCabin(data, { onSuccess: () => reset() });
   }
 
   return (
-    <Form onSubmit={handleSubmit(submitForm)}>
+    <Form
+      onSubmit={handleSubmit(submitForm)}
+      type={onCloseWindow ? "modal" : "regular"}>
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
