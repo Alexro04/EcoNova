@@ -1,3 +1,4 @@
+import { createContext, useContext, useState } from "react";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -48,3 +49,35 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
+
+const ModalContext = createContext();
+
+function Modal({ children }) {
+  const { isOpen, setIsOpen } = useState("");
+
+  return (
+    <ModalContext.Provider value={(isOpen, setIsOpen)}>
+      {children}
+    </ModalContext.Provider>
+  );
+}
+
+function Open({ children }) {
+  return children;
+}
+
+function Window({ children }) {
+  const { isOpen } = useContext(ModalContext);
+  return (
+    isOpen && (
+      <Overlay>
+        <StyledModal>{children}</StyledModal>
+      </Overlay>
+    )
+  );
+}
+
+Modal.Window = Window;
+Modal.Open = Open;
+
+export default Modal;

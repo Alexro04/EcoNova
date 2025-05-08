@@ -5,6 +5,7 @@ import CabinTable from "../features/cabins/CabinTable";
 import Button from "../ui/Button";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import styled from "styled-components";
+import Modal from "../ui/Modal";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -29,7 +30,11 @@ function Cabins() {
             {showForm ? "Close Form" : "Add Cabin"}
           </Button>
         </ButtonContainer>
-        {showForm && <CreateCabinForm />}
+        {showForm && (
+          <Modal>
+            <CreateCabinForm />
+          </Modal>
+        )}
       </Line>
     </>
   );
