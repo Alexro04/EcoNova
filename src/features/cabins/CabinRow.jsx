@@ -8,6 +8,7 @@ import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import useCreateCabin from "./useCreateCabin";
+import Modal from "../../ui/Modal";
 
 const TableRow = styled.div`
   display: grid;
@@ -48,15 +49,10 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 
-function CabinRow({ cabin, selectedCabin, setSelectedCabin }) {
+function CabinRow({ cabin }) {
   const { name, price, _id, discount, cabinPictures, capacity } = cabin;
   const queryClient = useQueryClient();
   const { mutate: createCabin } = useCreateCabin();
-
-  function handleToggleEditForm(id) {
-    if (selectedCabin === id) setSelectedCabin(null);
-    else setSelectedCabin(id);
-  }
 
   const { isPending: isDeleting, mutate } = useMutation({
     mutationFn: (id) =>
@@ -94,17 +90,19 @@ function CabinRow({ cabin, selectedCabin, setSelectedCabin }) {
           <button onClick={handleDuplicateCabin}>
             <HiOutlineDuplicate />
           </button>
-          <button onClick={() => handleToggleEditForm(_id)}>
-            <HiOutlinePencil />
-          </button>
+          <Modal>
+            <Modal.Open opens={cabin._id}>
+              <HiOutlinePencil />
+            </Modal.Open>
+            <Modal.Window name={cabin._id}>
+              <CreateCabinForm cabin={cabin} />
+            </Modal.Window>
+          </Modal>
           <button onClick={() => mutate(_id)} disabled={isDeleting}>
             {isDeleting ? "Deleting..." : <HiOutlineTrash />}
           </button>
         </div>
       </TableRow>
-      {selectedCabin === cabin._id && (
-        <CreateCabinForm cabin={cabin} setSelectedCabin={setSelectedCabin} />
-      )}
     </>
   );
 }
