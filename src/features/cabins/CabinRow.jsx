@@ -5,10 +5,11 @@ import styled from "styled-components";
 
 import CreateCabinForm from "./CreateCabinForm";
 import { formatCurrency } from "../../utils/helpers";
-import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import useCreateCabin from "./useCreateCabin";
 import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { deleteCabin as deleteCabinApi } from "../../services/apiCabins";
 
 const TableRow = styled.div`
   display: grid;
@@ -54,9 +55,9 @@ function CabinRow({ cabin }) {
   const queryClient = useQueryClient();
   const { mutate: createCabin } = useCreateCabin();
 
-  const { isPending: isDeleting, mutate } = useMutation({
+  const { isPending: isDeleting, mutate: deleteCabin } = useMutation({
     mutationFn: (id) =>
-      toast.promise(deleteCabin(id), {
+      toast.promise(deleteCabinApi(id), {
         success: "Cabin deleted successfully",
         error: "An error occured. Try again!",
         loading: "Deleting cabin...",
@@ -97,10 +98,18 @@ function CabinRow({ cabin }) {
             <Modal.Window name={cabin._id}>
               <CreateCabinForm cabin={cabin} />
             </Modal.Window>
+
+            <Modal.Open opens="delete-cabin">
+              <HiOutlineTrash />
+            </Modal.Open>
+            <Modal.Window name="delete-cabin">
+              <ConfirmDelete
+                resourceName="Cabin"
+                onConfirm={() => deleteCabin(_id)}
+                disabled={isDeleting}
+              />
+            </Modal.Window>
           </Modal>
-          <button onClick={() => mutate(_id)} disabled={isDeleting}>
-            {isDeleting ? "Deleting..." : <HiOutlineTrash />}
-          </button>
         </div>
       </TableRow>
     </>

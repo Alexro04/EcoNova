@@ -1,9 +1,7 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
-import CreateCabinForm from "./CreateCabinForm";
 import useCabin from "./useCabin";
 
 const Table = styled.div`
@@ -31,8 +29,6 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
-  const [selectedCabin, setSelectedCabin] = useState(null);
-
   const { data: cabins, isPending } = useCabin();
 
   if (isPending) return <Spinner />;
@@ -47,12 +43,7 @@ function CabinTable() {
         <div></div>
       </TableHeader>
       {cabins.data.map((cabin) => (
-        <CabinRow
-          cabin={cabin}
-          key={cabin._id}
-          selectedCabin={selectedCabin}
-          setSelectedCabin={setSelectedCabin}
-        />
+        <CabinRow cabin={cabin} key={cabin._id} />
       ))}
     </Table>
   );
