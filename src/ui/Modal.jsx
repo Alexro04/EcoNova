@@ -1,6 +1,7 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -73,11 +74,13 @@ function Open({ children, opens }) {
 
 function Window({ children, name }) {
   const { selectedWindow, closeWindow } = useContext(ModalContext);
+  const ref = useOutsideClick(closeWindow);
+
   return (
     selectedWindow === name &&
     createPortal(
       <Overlay>
-        <StyledModal>
+        <StyledModal ref={ref}>
           <Button onClick={closeWindow}>X</Button>
           {cloneElement(children, {
             onCloseWindow: closeWindow,
