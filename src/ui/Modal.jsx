@@ -1,6 +1,8 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import { LiaTimesSolid } from "react-icons/lia";
+
 import useOutsideClick from "../hooks/useOutsideClick";
 
 const StyledModal = styled.div`
@@ -81,7 +83,9 @@ function Window({ children, name }) {
     createPortal(
       <Overlay>
         <StyledModal ref={ref}>
-          <Button onClick={closeWindow}>X</Button>
+          <Button onClick={closeWindow}>
+            <LiaTimesSolid />
+          </Button>
           {cloneElement(children, {
             onCloseWindow: closeWindow,
           })}
