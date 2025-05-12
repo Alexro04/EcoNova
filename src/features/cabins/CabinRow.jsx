@@ -11,6 +11,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { deleteCabin as deleteCabinApi } from "../../services/apiCabins";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
 const Img = styled.img`
   display: block;
@@ -76,20 +77,35 @@ function CabinRow({ cabin }) {
       <Price>{formatCurrency(price)}</Price>
       <Discount>{formatCurrency(discount)}</Discount>
       <div>
-        <button onClick={handleDuplicateCabin}>
-          <HiOutlineDuplicate />
-        </button>
         <Modal>
-          <Modal.Open opens={cabin._id}>
-            <HiOutlinePencil />
-          </Modal.Open>
+          <Menus.Menu>
+            <Menus.Toogle id={_id} />
+            <Menus.List id={_id}>
+              <Modal.Open opens={cabin._id}>
+                <Menus.Button>
+                  <HiOutlinePencil />
+                  <span>Edit</span>
+                </Menus.Button>
+              </Modal.Open>
+
+              <Modal.Open opens="delete-cabin">
+                <Menus.Button>
+                  <HiOutlineTrash />
+                  <span>Delete</span>
+                </Menus.Button>
+              </Modal.Open>
+
+              <Menus.Button onClick={handleDuplicateCabin}>
+                <HiOutlineDuplicate />
+                <span>Duplicate</span>
+              </Menus.Button>
+            </Menus.List>
+          </Menus.Menu>
+
           <Modal.Window name={cabin._id}>
             <CreateCabinForm cabin={cabin} />
           </Modal.Window>
 
-          <Modal.Open opens="delete-cabin">
-            <HiOutlineTrash />
-          </Modal.Open>
           <Modal.Window name="delete-cabin">
             <ConfirmDelete
               resourceName="Cabin"

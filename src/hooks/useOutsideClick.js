@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function useOutsideClick(callback) {
+export default function useOutsideClick(callback, bubbleDown = true) {
   const ref = useRef();
 
   useEffect(
@@ -8,13 +8,15 @@ export default function useOutsideClick(callback) {
       function handleClick(e) {
         if (ref.current && e.target.contains(ref.current)) {
           callback();
+          console.log(e.target.value);
         }
       }
 
-      document.addEventListener("click", handleClick, true);
-      return () => document.removeEventListener("click", handleClick, true);
+      document.addEventListener("click", handleClick, bubbleDown);
+      return () =>
+        document.removeEventListener("click", handleClick, bubbleDown);
     },
-    [callback]
+    [callback, bubbleDown]
   );
   return ref;
 }
