@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { createPortal } from "react-dom";
+import { createContext, useContext, useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import styled from "styled-components";
 
@@ -36,15 +29,27 @@ const StyledToggle = styled.button`
   }
 `;
 
+// const StyledList = styled.ul`
+//   position: fixed;
+
+//   background-color: var(--color-grey-0);
+//   box-shadow: var(--shadow-md);
+//   border-radius: var(--border-radius-md);
+
+//   right: ${(props) => props.position.x}px;
+//   top: ${(props) => props.position.y}px;
+// `;
+
 const StyledList = styled.ul`
-  position: fixed;
+  position: absolute;
 
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: -32px;
+  top: 38px;
+  z-index: 100;
 `;
 
 const StyledButton = styled.button`
@@ -75,19 +80,8 @@ const StyledButton = styled.button`
 const MenuContext = createContext();
 function Menus({ children }) {
   const [currentOpen, setCurrentOpen] = useState("");
-  const [position, setPosition] = useState(null);
   const open = setCurrentOpen;
   const close = () => setCurrentOpen("");
-
-  function updatePosition(el) {
-    const rect = el?.closest("button").getBoundingClientRect();
-    const position = {
-      x: window.outerWidth - rect?.width - rect?.x - 24,
-      y: rect?.height + rect?.y + 8,
-    };
-    setPosition(position);
-    return position;
-  }
 
   return (
     <MenuContext.Provider
@@ -95,8 +89,6 @@ function Menus({ children }) {
         currentOpen,
         open,
         close,
-        position,
-        updatePosition,
       }}>
       {children}
     </MenuContext.Provider>
@@ -108,9 +100,9 @@ function Menu({ children }) {
 }
 
 function Toogle({ id }) {
-  const { currentOpen, open, close, updatePosition } = useContext(MenuContext);
-  function handleClick(e) {
-    updatePosition(e.target);
+  const { currentOpen, open, close } = useContext(MenuContext);
+
+  function handleClick() {
     currentOpen === "" || currentOpen != id ? open(id) : close();
   }
 
@@ -122,31 +114,10 @@ function Toogle({ id }) {
 }
 
 function List({ children, id }) {
-  const { currentOpen, close, position, updatePosition } =
-    useContext(MenuContext);
-  const ref = useOutsideClick(close);
+  const { currentOpen, close } = useContext(MenuContext);
+  const ref = useOutsideClick(close, false);
 
-  const handleScroll = useCallback(() => {
-    const position = updatePosition(ref.current);
-    console.log(position);
-  }, [updatePosition, ref]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  return (
-    currentOpen === id &&
-    createPortal(
-      <StyledList position={position} ref={ref}>
-        {children}
-      </StyledList>,
-      document.body,
-      "cabin-menu"
-    )
-  );
+  return currentOpen === id && <StyledList ref={ref}>{children}</StyledList>;
 }
 
 function Button({ children, onClick }) {

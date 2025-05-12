@@ -7,8 +7,9 @@ export default function useOutsideClick(callback, bubbleDown = true) {
     function () {
       function handleClick(e) {
         if (ref.current && e.target.contains(ref.current)) {
+          console.log(ref.current);
+          console.log(e.target);
           callback();
-          console.log(e.target.value);
         }
       }
 
