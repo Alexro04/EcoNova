@@ -5,7 +5,7 @@ import Button from "../ui/Button";
 import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import styled from "styled-components";
 import Modal from "../ui/Modal";
-import CabinOperations from "../features/cabins/CabinOperations";
+import CabinTableOperations from "../features/cabins/CabinTableOperations";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -16,8 +16,8 @@ function Cabins() {
   return (
     <>
       <Line type="horizontal">
-        <Heading as="h1">All Cabins</Heading>
-        <CabinOperations />
+        <Heading as="h1">Cabins</Heading>
+        <CabinTableOperations />
       </Line>
 
       <Line type="vertical">

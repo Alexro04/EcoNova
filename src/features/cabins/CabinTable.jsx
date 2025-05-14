@@ -8,13 +8,12 @@ import useCabin from "./useCabin";
 function CabinTable() {
   const { data: cabins, isPending } = useCabin();
   const [searchParams] = useSearchParams();
-  const filterValue = searchParams.get("discount") || "all";
-  const sortBy = searchParams.get("sort-by") || "capacity";
-  const sortOrder = searchParams.get("sort-order") || "asc";
-  const mult = sortOrder === "asc" ? 1 : -1;
 
   if (isPending) return <Spinner />;
+  console.log(cabins);
 
+  //filter
+  const filterValue = searchParams.get("discount") || "all";
   let filteredCabins;
   if (filterValue === "all") filteredCabins = cabins?.data;
   if (filterValue === "no-discount")
@@ -22,6 +21,10 @@ function CabinTable() {
   if (filterValue === "with-discount")
     filteredCabins = cabins?.data.filter((cabin) => cabin.discount > 0);
 
+  //Sort
+  const sortBy = searchParams.get("sort-by") || "capacity";
+  const sortOrder = searchParams.get("sort-order") || "asc";
+  const mult = sortOrder === "asc" ? 1 : -1;
   const sortedCabins = filteredCabins.sort(
     (a, b) => (a[sortBy] - b[sortBy]) * mult
   );
