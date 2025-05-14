@@ -8,16 +8,23 @@ import useCabin from "./useCabin";
 function CabinTable() {
   const { data: cabins, isPending } = useCabin();
   const [searchParams] = useSearchParams();
-  const filterValue = searchParams.get("discount");
-  let filteredCabins;
+  const filterValue = searchParams.get("discount") || "all";
+  const sortBy = searchParams.get("sort-by") || "capacity";
+  const sortOrder = searchParams.get("sort-order") || "asc";
+  const mult = sortOrder === "asc" ? 1 : -1;
 
   if (isPending) return <Spinner />;
 
+  let filteredCabins;
   if (filterValue === "all") filteredCabins = cabins?.data;
   if (filterValue === "no-discount")
     filteredCabins = cabins?.data.filter((cabin) => cabin.discount === 0);
   if (filterValue === "with-discount")
     filteredCabins = cabins?.data.filter((cabin) => cabin.discount > 0);
+
+  const sortedCabins = filteredCabins.sort(
+    (a, b) => (a[sortBy] - b[sortBy]) * mult
+  );
 
   return (
     <Menus>
@@ -31,7 +38,7 @@ function CabinTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={filteredCabins}
+          data={sortedCabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin._id} />}
         />
       </Table>

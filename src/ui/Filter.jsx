@@ -35,14 +35,14 @@ const FilterButton = styled.button`
   }
 `;
 
-function Filter({ options }) {
+function Filter({ options, fieldname }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   function handleClick(value) {
-    searchParams.set("discount", value);
+    searchParams.set(fieldname, value);
     setSearchParams(searchParams);
   }
-  const currentValue = searchParams.get("discount") || options[0].value;
+  const currentValue = searchParams.get(fieldname) || options[0].value;
 
   return (
     <StyledFilter>
