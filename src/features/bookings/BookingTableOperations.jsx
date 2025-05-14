@@ -18,17 +18,17 @@ function BookingTableOperations() {
       <Sort defaultBy="date" defaultOrder="asc">
         <Sort.SortBy
           options={[
-            { value: "startDate", label: "Sort by date" },
+            { value: "checkInDate", label: "Sort by date" },
             {
-              value: "totalPrice",
+              value: "bookingCost",
               label: "Sort by amount",
             },
           ]}
         />
         <Sort.SortOrder
           options={[
-            { value: "asc", label: "ASC" },
-            { value: "desc", label: "DESC" },
+            { value: "asc", label: "Ascending" },
+            { value: "desc", label: "Descending" },
           ]}
         />
       </Sort>

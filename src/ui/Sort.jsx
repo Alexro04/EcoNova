@@ -6,15 +6,15 @@ const SortContext = createContext();
 
 function Sort({ children, defaultBy, defaultOrder }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortBy = searchParams.get("sort-by") || defaultBy;
-  const sortOrder = searchParams.get("sort-order") || defaultOrder;
+  const sortBy = searchParams.get("sortBy") || defaultBy;
+  const sortOrder = searchParams.get("sortOrder") || defaultOrder;
   const handleSortBy = (e) => {
-    searchParams.set("sort-by", e.target.value);
+    searchParams.set("sortBy", e.target.value);
     setSearchParams(searchParams);
   };
 
   const handleSortOrder = (e) => {
-    searchParams.set("sort-order", e.target.value);
+    searchParams.set("sortOrder", e.target.value);
     setSearchParams(searchParams);
   };
 
