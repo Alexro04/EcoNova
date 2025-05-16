@@ -1,5 +1,4 @@
-import { HiChevronLeft } from "react-icons/hi";
-import { HiChevronRight } from "react-icons/hi2";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
