@@ -7,6 +7,7 @@ import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
 import AppLayout from "./ui/AppLayout";
 import Bookings from "./pages/Bookings";
+import Booking from "./pages/Booking";
 import Users from "./pages/Users";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
@@ -31,6 +32,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="cabins" element={<Cabins />} />
             <Route path="bookings" element={<Bookings />} />
+            <Route path="booking/:bookingId" element={<Booking />} />
             <Route path="users" element={<Users />} />
             <Route path="settings" element={<Settings />} />
           </Route>

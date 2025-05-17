@@ -34,10 +34,6 @@ const Price = styled.div`
   font-weight: 600;
 `;
 
-const MenuContainer = styled.div`
-  position: relative;
-`;
-
 const Discount = styled.div`
   font-family: "Sono";
   font-weight: 500;
@@ -82,7 +78,7 @@ function CabinRow({ cabin }) {
       <Discount>
         {discount > 0 ? formatCurrency(discount) : <span>&mdash;</span>}
       </Discount>
-      <MenuContainer>
+      <Menus.Container>
         <Modal>
           <Menus.Menu>
             <Menus.Toogle id={_id} />
@@ -120,7 +116,7 @@ function CabinRow({ cabin }) {
             />
           </Modal.Window>
         </Modal>
-      </MenuContainer>
+      </Menus.Container>
     </Table.Row>
   );
 }

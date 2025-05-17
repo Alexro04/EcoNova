@@ -62,6 +62,7 @@ const StyledButton = styled.button`
   transition: all 0.2s;
 
   display: flex;
+  white-space: normal;
   align-items: center;
   gap: 1.6rem;
 
@@ -75,6 +76,14 @@ const StyledButton = styled.button`
     color: var(--color-grey-400);
     transition: all 0.3s;
   }
+
+  & span {
+    white-space: nowrap;
+  }
+`;
+
+const Container = styled.div`
+  position: relative;
 `;
 
 const MenuContext = createContext();
@@ -120,7 +129,7 @@ function List({ children, id }) {
   return currentOpen === id && <StyledList ref={ref}>{children}</StyledList>;
 }
 
-function Button({ children, onClick }) {
+function Button({ icon, onClick, label }) {
   const { close } = useContext(MenuContext);
 
   function handleClick() {
@@ -129,7 +138,10 @@ function Button({ children, onClick }) {
   }
   return (
     <li>
-      <StyledButton onClick={handleClick}>{children}</StyledButton>
+      <StyledButton onClick={handleClick}>
+        {icon}
+        <span>{label}</span>
+      </StyledButton>
     </li>
   );
 }
@@ -138,5 +150,6 @@ Menus.Menu = Menu;
 Menus.Toogle = Toogle;
 Menus.List = List;
 Menus.Button = Button;
+Menus.Container = Container;
 
 export default Menus;

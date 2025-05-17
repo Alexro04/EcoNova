@@ -20,3 +20,13 @@ export async function getBookings({ filter, sort, page }) {
     throw new Error(error.message);
   }
 }
+
+export async function getBooking(bookingId) {
+  try {
+    const response = await axios.get(`${BASE_URL}/booking/${bookingId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
