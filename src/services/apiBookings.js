@@ -11,7 +11,6 @@ export async function getBookings({ filter, sort, page }) {
       `${filter ? "&" : ""}sortBy=${sort.sortBy}&sortOrder=${sort.sortOrder}`;
   if (page) query = query + `${sort ? "&" : ""}page=${page}`;
 
-  console.log(query);
   try {
     const response = await axios.get(query);
     return response.data;
@@ -24,6 +23,16 @@ export async function getBookings({ filter, sort, page }) {
 export async function getBooking(bookingId) {
   try {
     const response = await axios.get(`${BASE_URL}/booking/${bookingId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function updateBooking(bookingId) {
+  try {
+    const response = await axios.post(`${BASE_URL}/update/${bookingId}`);
     return response.data;
   } catch (error) {
     console.log(error.message);

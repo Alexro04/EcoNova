@@ -84,23 +84,18 @@ function CabinRow({ cabin }) {
             <Menus.Toogle id={_id} />
             <Menus.List id={_id}>
               <Modal.Open opens={cabin._id}>
-                <Menus.Button>
-                  <HiOutlinePencil />
-                  <span>Edit</span>
-                </Menus.Button>
+                <Menus.Button icon={<HiOutlinePencil />} label="Edit" />
               </Modal.Open>
 
               <Modal.Open opens="delete-cabin">
-                <Menus.Button>
-                  <HiOutlineTrash />
-                  <span>Delete</span>
-                </Menus.Button>
+                <Menus.Button icon={<HiOutlineTrash />} label="Delete" />
               </Modal.Open>
 
-              <Menus.Button onClick={handleDuplicateCabin}>
-                <HiOutlineDuplicate />
-                <span>Duplicate</span>
-              </Menus.Button>
+              <Menus.Button
+                onClick={handleDuplicateCabin}
+                icon={<HiOutlineDuplicate />}
+                label="Duplicate"
+              />
             </Menus.List>
           </Menus.Menu>
 

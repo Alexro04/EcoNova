@@ -9,16 +9,14 @@ import {
 
 import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
-
 import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
-import useBookings from "./useBooking";
+import getDaysBetweenDates from "../../utils/getDaysBetweenDates";
 
-const StyledBookingDataBox = styled.section`
+const DataBox = styled.section`
   /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
-
   overflow: hidden;
 `;
 
@@ -102,36 +100,37 @@ const Footer = styled.footer`
   text-align: right;
 `;
 
-function BookingDataBox({ booking }) {
+function BookingDataBox({ booking, includesBreakfast, breakfastPrice }) {
   const {
     createdAt,
     checkInDate,
     checkOutDate,
-    numNights = 9,
     numGuests = 3,
-    cabinPrice = 244,
-    extrasPrice,
     bookingCost,
-    hasBreakfast = true,
+    hasPaid,
+    extraCost = 0,
     observations = "This plave s a beru shiruopw ojfnosubfpns dojs usbojc ojsboud ojsbbpisn sbifpisnd ojbspinff",
-    isPaid = true,
-    guestsId: {
+    guestId: {
       fullname: guestName = "Alexro",
       email = "ajakatomi@gmail.com",
       country = "Nigeria",
       countryFlag,
       nationalID = 234348289755,
     } = {},
-    cabinsId: { name: cabinName } = {},
-  } = booking;
+    cabinId: { name: cabinName } = {},
+  } = booking || {};
+
+  const numNights = getDaysBetweenDates(checkOutDate, checkInDate);
+  const hasBreakfast = extraCost > 0 || includesBreakfast;
+  const totalCost = extraCost + bookingCost;
 
   return (
-    <StyledBookingDataBox>
+    <DataBox>
       <Header>
         <div>
           <HiOutlineHomeModern />
           <p>
-            {numNights} nights in Cabin <span>{cabinName}cbina</span>
+            {numNights} nights in Cabin <span>{cabinName}</span>
           </p>
         </div>
 
@@ -168,24 +167,23 @@ function BookingDataBox({ booking }) {
           {hasBreakfast ? "Yes" : "No"}
         </DataItem>
 
-        <Price isPaid={isPaid}>
+        <Price isPaid={hasPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
-            {formatCurrency(bookingCost)}
-
+            {formatCurrency(totalCost)}
             {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
+              ` (${formatCurrency(bookingCost)} cabin + ${formatCurrency(
+                extraCost ? extraCost : breakfastPrice
               )} breakfast)`}
           </DataItem>
 
-          <p>{isPaid ? "Paid" : "Will pay at property"}</p>
+          <p>{hasPaid ? "Paid" : "Will pay at property"}</p>
         </Price>
       </Section>
 
       <Footer>
         <p>Booked {format(new Date(createdAt), "EEE, MMM dd yyyy, p")}</p>
       </Footer>
-    </StyledBookingDataBox>
+    </DataBox>
   );
 }
 
