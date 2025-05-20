@@ -10,7 +10,6 @@ function CabinTable() {
   const [searchParams] = useSearchParams();
 
   if (isPending) return <Spinner />;
-  console.log(cabins);
 
   //filter
   const filterValue = searchParams.get("discount") || "all";
@@ -22,8 +21,8 @@ function CabinTable() {
     filteredCabins = cabins?.data.filter((cabin) => cabin.discount > 0);
 
   //Sort
-  const sortBy = searchParams.get("sort-by") || "capacity";
-  const sortOrder = searchParams.get("sort-order") || "asc";
+  const sortBy = searchParams.get("sortBy") || "capacity";
+  const sortOrder = searchParams.get("sortOrder") || "asc";
   const mult = sortOrder === "asc" ? 1 : -1;
   const sortedCabins = filteredCabins.sort(
     (a, b) => (a[sortBy] - b[sortBy]) * mult

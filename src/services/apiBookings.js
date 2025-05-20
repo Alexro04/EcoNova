@@ -1,4 +1,5 @@
 import axios from "axios";
+import { PAGE_LIMIT } from "../utils/constants";
 
 const BASE_URL = "http://localhost:3000/econova/api/bookings";
 
@@ -9,7 +10,9 @@ export async function getBookings({ filter, sort, page }) {
     query =
       query +
       `${filter ? "&" : ""}sortBy=${sort.sortBy}&sortOrder=${sort.sortOrder}`;
+  query = query + `${sort ? "&" : ""}limit=${PAGE_LIMIT}`;
   if (page) query = query + `${sort ? "&" : ""}page=${page}`;
+  console.log(query);
 
   try {
     const response = await axios.get(query);
@@ -30,9 +33,12 @@ export async function getBooking(bookingId) {
   }
 }
 
-export async function updateBooking(bookingId) {
+export async function updateBooking(bookingId, updates) {
   try {
-    const response = await axios.post(`${BASE_URL}/update/${bookingId}`);
+    const response = await axios.post(
+      `${BASE_URL}/update/${bookingId}`,
+      updates
+    );
     return response.data;
   } catch (error) {
     console.log(error.message);

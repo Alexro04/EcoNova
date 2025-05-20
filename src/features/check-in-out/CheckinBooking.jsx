@@ -28,9 +28,11 @@ function CheckinBooking() {
   const [hasPaid, setHasPaid] = useState(false);
   const [includesBreakfast, setIncludesBreakfast] = useState(false);
   const moveBack = useMoveBack();
+
   const { booking, isPending } = useBooking();
   const { settings, isLoading: isLoadingSettings } = useSetting();
   const { checkin, isCheckingin } = useCheckIn();
+
   const {
     _id: id,
     numGuests,
@@ -52,11 +54,15 @@ function CheckinBooking() {
   );
 
   function handleCheckin() {
-    if (hasPaid) {
+    if (!hasPaid) return;
+    if (includesBreakfast) {
+      checkin({ bookingId: id, extras: { extraCost: breakfastPrice } });
+    } else {
+      checkin({ bookingId: id });
     }
   }
 
-  if (isPending && isLoadingSettings) return <Spinner />;
+  if (isPending || isLoadingSettings) return <Spinner />;
 
   return (
     <>
@@ -79,7 +85,7 @@ function CheckinBooking() {
             if (!includesBreakfast) setHasPaid(false);
           }}
           disabled={extraCost > 0}
-          id={id}>
+          id="breakfast">
           Check this to include breakfast in this booking
         </Checkbox>
       </Box>
@@ -89,7 +95,7 @@ function CheckinBooking() {
           checked={hasPaid}
           onChange={() => setHasPaid((paid) => !paid)}
           disabled={hasPaid}
-          id={id}>
+          id="confirm-payment">
           Check This box to confirm <strong>complete payment</strong> for this
           booking
         </Checkbox>
@@ -101,15 +107,11 @@ function CheckinBooking() {
             variation="primary"
             size="medium"
             onClick={handleCheckin}
-            disabled={!hasPaid}>
+            disabled={!hasPaid || isCheckingin}>
             Check in booking #{id}
           </Button>
         )}
-        {status === "checked-in" && (
-          <Button variation="primary" size="medium">
-            Check out
-          </Button>
-        )}
+
         <Button variation="secondary" size="medium" onClick={moveBack}>
           Back
         </Button>

@@ -5,7 +5,6 @@ const BASE_URL = "http://localhost:3000/econova/api/settings";
 export async function getSettings() {
   try {
     const response = await axios.get(`${BASE_URL}/get`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error.message);
