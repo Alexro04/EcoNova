@@ -45,3 +45,13 @@ export async function updateBooking(bookingId, updates) {
     throw new Error(error.message);
   }
 }
+
+export async function deleteBooking(bookingId) {
+  try {
+    const response = await axios.delete(`${BASE_URL}/delete/${bookingId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}

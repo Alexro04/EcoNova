@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ImageContainer = styled.div`
@@ -6,13 +7,15 @@ const ImageContainer = styled.div`
 `;
 
 const Img = styled.img`
-  width: 120px;
+  width: 150px;
 `;
 function Logo() {
   return (
-    <ImageContainer>
-      <Img src="Logo.svg" alt="Hotel Logo" />
-    </ImageContainer>
+    <Link to="/">
+      <ImageContainer>
+        <Img src="Logo.svg" alt="Hotel Logo" />
+      </ImageContainer>
+    </Link>
   );
 }
 

@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+
 import Menus from "../../ui/Menus";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
