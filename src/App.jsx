@@ -28,11 +28,11 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <AuthLayer>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <GlobalStyle />
-        <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <GlobalStyle />
+      <BrowserRouter>
+        <AuthLayer>
           <Routes>
             <Route
               element={
@@ -53,21 +53,21 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
-        </BrowserRouter>
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            success: { duration: 2000 },
-            error: { duration: 4000 },
-            style: {
-              backgroundColor: "var(--color-grey-50)",
-              color: "var(--color-grey-700)",
-              fontSize: "14px",
-            },
-          }}
-        />
-      </QueryClientProvider>
-    </AuthLayer>
+        </AuthLayer>
+      </BrowserRouter>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          success: { duration: 2000 },
+          error: { duration: 4000 },
+          style: {
+            backgroundColor: "var(--color-grey-50)",
+            color: "var(--color-grey-700)",
+            fontSize: "14px",
+          },
+        }}
+      />
+    </QueryClientProvider>
   );
 }
 

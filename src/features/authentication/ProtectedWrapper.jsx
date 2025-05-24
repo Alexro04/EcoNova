@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+
 import Spinner from "../../ui/Spinner";
 import useUserData from "./useUserData";
 import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import useLogout from "./useLogout";
 
 const FullPage = styled.div`
   height: 100dvh;
@@ -17,24 +17,26 @@ const FullPage = styled.div`
 function ProtectedWrapper({ children }) {
   // check for user data
   const { userData, isPending } = useUserData();
-  const { updateUser } = useAuth();
+  const { user_data, updateUser, setSession } = useAuth();
   const navigate = useNavigate();
-  const { logout } = useLogout();
 
   // redirect user if user data cannot be fetched
   useEffect(
     function () {
-      if (!isPending && (!userData || Object.keys(userData) === 0)) logout();
+      if (!isPending && (!userData || Object.keys(userData).length === 0)) {
+        setSession({});
+        navigate("/login");
+      }
     },
-    [isPending, navigate, userData, logout]
+    [isPending, navigate, userData, setSession]
   );
 
   // update the user_data in the Auth Context
   useEffect(
     function () {
-      if (userData?.user_data) updateUser(userData?.user_data);
+      if (userData && Object.keys(userData).length > 0) updateUser(userData);
     },
-    [userData?.user_data, updateUser]
+    [userData, updateUser]
   );
 
   if (isPending)
@@ -45,6 +47,6 @@ function ProtectedWrapper({ children }) {
     );
 
   // if user is authorized, render the app
-  return children;
+  if (!isPending && Object.keys(user_data).length > 0) return children;
 }
 export default ProtectedWrapper;
