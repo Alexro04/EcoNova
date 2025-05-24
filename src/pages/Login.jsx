@@ -30,14 +30,14 @@ const MainContainer = styled.div`
 `;
 
 const Picture = styled.img`
-  border-radius: 12px;
-  width: 100%;
   height: 100%;
+  width: 100%;
+  border-radius: 12px;
   object-fit: cover;
 `;
 
 const PictureContainer = styled.div`
-  height: 80dvb;
+  height: 480px;
 `;
 
 function Login() {

@@ -15,6 +15,8 @@ import Checkin from "./pages/Checkin";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PageNotFound from "./pages/PageNotFound";
+import ProtectedWrapper from "./features/authentication/ProtectedWrapper";
+import AuthLayer from "./features/authentication/AuthContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,39 +28,46 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<Navigate replace to="dashboard" />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="cabins" element={<Cabins />} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="booking/:bookingId" element={<Booking />} />
-            <Route path="check-in/:bookingId" element={<Checkin />} />
-            <Route path="users" element={<Users />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          success: { duration: 2000 },
-          error: { duration: 4000 },
-          style: {
-            backgroundColor: "var(--color-grey-50)",
-            color: "var(--color-grey-700)",
-            fontSize: "14px",
-          },
-        }}
-      />
-    </QueryClientProvider>
+    <AuthLayer>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <GlobalStyle />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              element={
+                <ProtectedWrapper>
+                  <AppLayout />
+                </ProtectedWrapper>
+              }>
+              <Route index element={<Navigate replace to="dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="cabins" element={<Cabins />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="booking/:bookingId" element={<Booking />} />
+              <Route path="check-in/:bookingId" element={<Checkin />} />
+              <Route path="users" element={<Users />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            success: { duration: 2000 },
+            error: { duration: 4000 },
+            style: {
+              backgroundColor: "var(--color-grey-50)",
+              color: "var(--color-grey-700)",
+              fontSize: "14px",
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </AuthLayer>
   );
 }
 

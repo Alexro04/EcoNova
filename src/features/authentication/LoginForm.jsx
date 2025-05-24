@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import useLogin from "./useLogin";
+import SpinnerMini from "../../ui/SpinnerMini";
 
 const StyledLink = styled(Link)`
   color: var(--color-brand-500);
@@ -13,10 +16,22 @@ const StyledLink = styled(Link)`
 `;
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ajakatomi@gmail.com");
+  const [password, setPassword] = useState("isthisthereallife");
+  const { login, isPending } = useLogin();
 
-  function handleSubmit() {}
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (email && password) {
+      const credentials = { email, password };
+      login(credentials, {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      });
+    }
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -40,8 +55,12 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button variation="primary" size="large">
-          Login
+        <Button
+          variation="primary"
+          size="large"
+          disabled={isPending}
+          onClick={handleSubmit}>
+          {isPending ? <SpinnerMini /> : "Login"}
         </Button>
       </FormRowVertical>
       <div>
