@@ -63,10 +63,6 @@ function LoginForm() {
           {isPending ? <SpinnerMini /> : "Login"}
         </Button>
       </FormRowVertical>
-      <div>
-        <span>Not registered yet?</span>
-        <StyledLink to="/signup">Sign up</StyledLink>
-      </div>
     </Form>
   );
 }

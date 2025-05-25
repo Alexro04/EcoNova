@@ -1,5 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 
 import GlobalStyle from "./styles/GlobalStyles";
 import Cabins from "./pages/Cabins";
@@ -9,11 +11,8 @@ import AppLayout from "./ui/AppLayout";
 import Bookings from "./pages/Bookings";
 import Booking from "./pages/Booking";
 import Users from "./pages/Users";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Toaster } from "react-hot-toast";
 import Checkin from "./pages/Checkin";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import PageNotFound from "./pages/PageNotFound";
 import ProtectedWrapper from "./features/authentication/ProtectedWrapper";
 import AuthLayer from "./features/authentication/AuthContext";
@@ -50,7 +49,6 @@ function App() {
               <Route path="settings" element={<Settings />} />
             </Route>
             <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </AuthLayer>
