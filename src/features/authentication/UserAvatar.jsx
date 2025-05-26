@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useAuth } from "./useAuth";
+
+import { useAuth } from "../../context/useAuth";
 
 const StyledUserAvatar = styled.div`
   display: flex;

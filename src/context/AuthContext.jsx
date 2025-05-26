@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 import { AuthContext } from "./useAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 export default function AuthLayer({ children }) {
   const [value, setValue] = useLocalStorageState({}, "session");

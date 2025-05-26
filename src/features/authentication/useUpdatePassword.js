@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { updateUserPassword } from "../../services/apiAuth";
 import toast from "react-hot-toast";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../../context/useAuth";
 
 function useUpdatePassword() {
   const {

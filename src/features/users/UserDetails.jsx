@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useAuth } from "../authentication/useAuth";
+
 import UpdateUserDataForm from "../authentication/UpdateUserDataForm";
 import Heading from "../../ui/Heading";
+import { useAuth } from "../../context/useAuth";
 
 const Avatar = styled.img`
   width: 22rem;

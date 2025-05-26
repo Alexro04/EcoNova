@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { getUser } from "../../services/apiAuth";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../../context/useAuth";
 
 function useUserData() {
   const { session } = useAuth();

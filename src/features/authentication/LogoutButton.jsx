@@ -1,6 +1,7 @@
 import { HiArrowRightOnRectangle } from "react-icons/hi2";
+
 import ButtonIcon from "../../ui/ButtonIcon";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../../context/useAuth";
 
 function LogoutButton() {
   const { logout } = useAuth();

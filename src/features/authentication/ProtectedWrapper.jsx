@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Spinner from "../../ui/Spinner";
 import useUserData from "./useUserData";
-import { useAuth } from "./useAuth";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
 
 const FullPage = styled.div`
   height: 100dvh;
