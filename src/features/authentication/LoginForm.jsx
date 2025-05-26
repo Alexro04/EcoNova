@@ -5,15 +5,8 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
-import styled from "styled-components";
 import useLogin from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
-
-const StyledLink = styled(Link)`
-  color: var(--color-brand-500);
-  padding-left: 8px;
-  font-weight: 500;
-`;
 
 function LoginForm() {
   const [email, setEmail] = useState("ajakatomi@gmail.com");

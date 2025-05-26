@@ -3,29 +3,38 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
-
-import { useUpdateUser } from "./useUpdateUser";
+import useUpdatePassword from "./useUpdatePassword";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
+
+  const { updatePassword, isPending: isUpdating } = useUpdatePassword();
   const { errors } = formState;
 
-  const { updateUser, isUpdating } = useUpdateUser();
+  // const { updateUser, isUpdating } = useUpdateUser();
 
-  function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset });
+  function onSubmit({ oldPassword, password }) {
+    console.log({ oldPassword, password });
+    updatePassword({ oldPassword, password }, { onSettled: reset });
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow
-        label="Password (min 8 characters)"
-        error={errors?.password?.message}
-      >
+      <FormRow label="Old password" error={errors?.oldPassword?.message}>
+        <Input
+          type="password"
+          id="oldPassword"
+          disabled={isUpdating}
+          {...register("oldPassword", {
+            required: "This field is required",
+          })}
+        />
+      </FormRow>
+
+      <FormRow label="New password" error={errors?.password?.message}>
         <Input
           type="password"
           id="password"
-          autoComplete="current-password"
           disabled={isUpdating}
           {...register("password", {
             required: "This field is required",
@@ -39,8 +48,7 @@ function UpdatePasswordForm() {
 
       <FormRow
         label="Confirm password"
-        error={errors?.passwordConfirm?.message}
-      >
+        error={errors?.passwordConfirm?.message}>
         <Input
           type="password"
           autoComplete="new-password"
@@ -49,15 +57,21 @@ function UpdatePasswordForm() {
           {...register("passwordConfirm", {
             required: "This field is required",
             validate: (value) =>
-              getValues().password === value || "Passwords need to match",
+              getValues().password === value || "Passwords must match",
           })}
         />
       </FormRow>
       <FormRow>
-        <Button onClick={reset} type="reset" variation="secondary">
+        <Button
+          type="reset"
+          variation="secondary"
+          size="medium"
+          onClick={reset}>
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button variation="primary" size="medium">
+          Change password
+        </Button>
       </FormRow>
     </Form>
   );

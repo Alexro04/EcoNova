@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllCabins } from "../../services/apiCabins";
+import { getAdmins } from "../../services/apiAuth";
 
 export default function useAdminUsers() {
-  const { data: employees, isPending } = useQuery({
-    queryKey: ["admin-users"],
-    queryFn: getAllCabins,
+  const { data, isPending } = useQuery({
+    queryKey: ["admins"],
+    queryFn: getAdmins,
   });
 
-  return { employees, isPending };
+  return { admins: data?.data, isPending };
 }

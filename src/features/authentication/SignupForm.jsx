@@ -1,19 +1,18 @@
+import { useForm } from "react-hook-form";
+
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
-import { useForm } from "react-hook-form";
-import Select from "../../ui/Select";
-
-// Email regex: /\S+@\S+\.\S+/
+import useCreateAdmin from "../users/useCreateAdmin";
 
 function SignupForm() {
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
+  const { createAdmin, isPending } = useCreateAdmin();
 
   function registerUser(data) {
-    console.log(data);
-    console.log(errors);
+    createAdmin(data, { onSettled: reset });
   }
 
   return (
@@ -30,7 +29,13 @@ function SignupForm() {
         <Input
           type="email"
           id="email"
-          {...register("email", { required: "This Field is required" })}
+          {...register("email", {
+            required: "This Field is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Invalid email format",
+            },
+          })}
         />
       </FormRow>
 
@@ -59,10 +64,10 @@ function SignupForm() {
       </FormRow>
 
       <FormRow>
-        <Button variation="secondary" size="large" type="reset">
+        <Button variation="secondary" size="large" type="reset" onClick={reset}>
           Cancel
         </Button>
-        <Button size="large" variation="primary">
+        <Button size="large" variation="primary" disabled={isPending}>
           Create new user
         </Button>
       </FormRow>
