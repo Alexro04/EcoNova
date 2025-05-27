@@ -18,6 +18,7 @@ import ProtectedWrapper from "./features/authentication/ProtectedWrapper";
 import Account from "./pages/Account";
 import AuthLayer from "./context/AuthContext";
 import DarkModeProvider from "./context/DarkModeContext";
+import CreateBooking from "./pages/CreateBooking";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ function App() {
                 <Route path="account" element={<Account />} />
                 <Route path="cabins" element={<Cabins />} />
                 <Route path="bookings" element={<Bookings />} />
+                <Route path="create-booking" element={<CreateBooking />} />
                 <Route path="booking/:bookingId" element={<Booking />} />
                 <Route path="check-in/:bookingId" element={<Checkin />} />
                 <Route path="users" element={<Users />} />

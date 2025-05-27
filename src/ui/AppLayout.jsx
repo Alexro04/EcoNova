@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 2.4rem 3.2rem;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const StyledAppLayout = styled.div`

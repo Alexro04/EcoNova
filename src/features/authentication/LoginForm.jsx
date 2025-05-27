@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
@@ -9,8 +8,8 @@ import useLogin from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
-  const [email, setEmail] = useState("ajakatomi@gmail.com");
-  const [password, setPassword] = useState("isthisthereallife");
+  const [email, setEmail] = useState("dimawev137@leabro.com");
+  const [password, setPassword] = useState("adminuser");
   const { login, isPending } = useLogin();
 
   function handleSubmit(e) {

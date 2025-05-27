@@ -25,7 +25,7 @@ const MainContainer = styled.div`
   gap: 24px;
   border-radius: 10px;
   background-color: var(--color-grey-0);
-  box-shadow: 5px 0px 20px var(--color-grey-200);
+  box-shadow: 3px 2px 10px var(--color-grey-100);
   padding: 24px 24px;
 `;
 
@@ -50,7 +50,7 @@ function Login() {
           <LoginForm />
         </FormContainer>
         <PictureContainer>
-          <Picture src="cabin2.jpg" />
+          <Picture src="cabin.jpg" />
         </PictureContainer>
       </MainContainer>
     </LoginLayout>
