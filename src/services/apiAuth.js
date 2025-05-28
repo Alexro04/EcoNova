@@ -42,6 +42,17 @@ export async function updateUserData(update, userId) {
   }
 }
 
+export async function createGuest(guest) {
+  try {
+    console.log("New guest", guest);
+    const response = await axios.post(`${BASE_URL}/create-guest`, guest);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
+
 export async function updateUserPassword(update, userId) {
   try {
     const res = await axios.post(

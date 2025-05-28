@@ -118,6 +118,89 @@ body {
   font-size: 1.6rem;
 }
 
+ /* Over-writing Calender Styles react-date-range component */
+.rdrCalendarWrapper {
+  width: fit-content;
+}
+
+.rdrDefinedRangesWrapper {
+  width: 180px;
+  border-right: 1px solid var(--color-grey-200);
+}
+
+.rdrStaticRange {
+  border-bottom: 1px solid var(--color-grey-200);
+}
+
+.rdrDateDisplayWrapper, .rdrMonthAndYearWrapper, .rdrMonth, .rdrDateRangeWrapper, .rdrDefinedRangesWrapper {
+  background-color: var(--color-grey-0);
+}
+
+.rdrInputRangeInput {
+  background-color: var(--color-grey-0);
+  border: solid 1px var(--color-grey-100);
+  color: var(--color-grey-700);
+}
+
+.rdrInputRangeInput:active, .rdrInputRangeInput:hover {
+  color: var(--color-grey-700);
+}
+
+.rdrStaticRangeLabel {
+  background-color: var(--color-grey-0);
+}
+
+.rdrStaticRange:hover .rdrStaticRangeLabel, .rdrStaticRange:focus .rdrStaticRangeLabel, .rdrDayDisabled {
+    background: var(--color-grey-100);
+}
+
+.rdrDayNumber span {
+  color: var(--color-grey-700);
+}
+
+.rdrDateInput input {
+  background-color: var(--color-grey-0);
+  color: var(--color-grey-700);
+}
+
+.rdrDateInput {
+  border: 1px solid var(--color-grey-100);
+  box-shadow: var(--shadow-sm);
+}
+
+.rdrMonthPicker select, .rdrYearPicker select {
+  color: var(--color-grey-700);
+}
+
+.rdrMonthPicker select option, .rdrYearPicker select option {
+  background-color: var(--color-grey-0);
+  color: var(--color-grey-700);
+}
+
+.rdrDayPassive .rdrDayNumber span {
+  color: var(--color-grey-300);
+}
+
+.rdrMonthName {
+  text-align: center;
+}
+
+.rdrNextPrevButton {
+  background-color: var(--color-grey-100);
+}
+
+.rdrPprevButton {
+  i {
+    border-color: transparent var(--color-grey-500) transparent transparent;
+  }
+}
+
+.rdrNextButton {
+  i {
+    border-color: transparent transparent transparent var(--color-grey-500);
+  }
+}
+
 input,
 button,
 textarea,

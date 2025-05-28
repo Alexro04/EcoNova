@@ -1,17 +1,14 @@
-import { useForm } from "react-hook-form";
-
-import Button from "../../ui/Button";
-import Input from "../../ui/Input";
-import useCreateAdmin from "../users/useCreateAdmin";
-import styled from "styled-components";
 import { HiOutlineMail } from "react-icons/hi";
-import GuestDataFormRow from "../../ui/GuestDataFormRow";
 import {
   HiOutlineFlag,
   HiOutlineIdentification,
   HiOutlinePhone,
   HiOutlineUser,
 } from "react-icons/hi2";
+
+import Input from "../../ui/Input";
+import styled from "styled-components";
+import GuestDataFormRow from "../../ui/GuestDataFormRow";
 
 const StyledForm = styled.div`
   display: grid;
@@ -23,21 +20,12 @@ const StyledInput = styled(Input)`
   padding: 10px 48px;
 `;
 
-function CreateGuestForm() {
-  const { register, handleSubmit, formState, reset } = useForm();
-  const { errors } = formState;
-  const { createAdmin, isPending } = useCreateAdmin();
-
-  function registerUser(data) {
-    createAdmin(data, { onSettled: reset });
-  }
-
+function CreateGuestForm({ errors, register }) {
   return (
-    <StyledForm onSubmit={handleSubmit(registerUser)}>
+    <StyledForm>
       <GuestDataFormRow
         label="Full Name"
-        // error={errors?.fullname?.message}
-        error="This field is required"
+        error={errors?.fullname?.message}
         icon={<HiOutlineUser />}>
         <StyledInput
           type="text"
@@ -48,7 +36,7 @@ function CreateGuestForm() {
 
       <GuestDataFormRow
         label="Nationality"
-        error={errors?.fullname?.message}
+        error={errors?.nationality?.message}
         icon={<HiOutlineFlag />}>
         <StyledInput
           type="text"
@@ -59,7 +47,7 @@ function CreateGuestForm() {
 
       <GuestDataFormRow
         label="Email Address"
-        error={errors?.fullname?.message}
+        error={errors?.email?.message}
         icon={<HiOutlineMail />}>
         <StyledInput
           type="text"
@@ -76,7 +64,7 @@ function CreateGuestForm() {
 
       <GuestDataFormRow
         label="Phone Number"
-        error={errors?.fullname?.message}
+        error={errors?.phoneNumber?.message}
         icon={<HiOutlinePhone />}>
         <StyledInput
           type="text"
@@ -87,7 +75,7 @@ function CreateGuestForm() {
 
       <GuestDataFormRow
         label="National ID (NIN)"
-        error={errors?.fullname?.message}
+        error={errors?.nationalId?.message}
         icon={<HiOutlineIdentification />}>
         <StyledInput
           type="text"
@@ -95,17 +83,6 @@ function CreateGuestForm() {
           {...register("nationalId", { required: "This Field is required" })}
         />
       </GuestDataFormRow>
-
-      {/* 
-
-      {/* <FormRow>
-        <Button variation="secondary" size="large" type="reset" onClick={reset}>
-          Cancel
-        </Button>
-        <Button size="large" variation="primary" disabled={isPending}>
-          Create new user
-        </Button>
-      </FormRow> */}
     </StyledForm>
   );
 }

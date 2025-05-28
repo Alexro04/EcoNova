@@ -12,7 +12,6 @@ export async function getBookings({ filter, sort, page }) {
       `${filter ? "&" : ""}sortBy=${sort.sortBy}&sortOrder=${sort.sortOrder}`;
   query = query + `${sort ? "&" : ""}limit=${PAGE_LIMIT}`;
   if (page) query = query + `${sort ? "&" : ""}page=${page}`;
-  console.log(query);
 
   try {
     const response = await axios.get(query);
@@ -49,6 +48,20 @@ export async function updateBooking(bookingId, updates) {
 export async function deleteBooking(bookingId) {
   try {
     const response = await axios.delete(`${BASE_URL}/delete/${bookingId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function createBooking(data) {
+  try {
+    const response = await axios.post(`${BASE_URL}/create`, {
+      ...data,
+      status: "unconfirmed",
+      hasPaid: false,
+    });
     return response.data;
   } catch (error) {
     console.log(error.message);
