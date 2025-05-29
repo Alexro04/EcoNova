@@ -1,15 +1,14 @@
 import { useState } from "react";
-import CreateGuestForm from "../features/authentication/CreateGuestForm";
-import Heading from "../ui/Heading";
-import styled, { css } from "styled-components";
-import Button from "../ui/Button";
-import SelectCabinForm from "../ui/SelectCabinForm";
 import { FaCheck } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import styled, { css } from "styled-components";
+
+import Button from "../ui/Button";
+import CreateGuestForm from "../features/authentication/CreateGuestForm";
+import SelectCabinForm from "../features/bookings/SelectCabinForm";
 import useCreateGuest from "../features/bookings/useCreateGuest";
 import useBookCabin from "../features/bookings/useBookCabin";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 const StyledCreateBooking = styled.div`
   display: flex;
@@ -19,7 +18,9 @@ const StyledCreateBooking = styled.div`
 
 const StageHeading = styled.p`
   text-align: center;
-  font-size: 2rem;
+  font-size: 3rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
 `;
 
 const LevelTag = styled.div`
@@ -51,10 +52,11 @@ const TagContainers = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  margin-top: 24px;
   justify-content: space-between;
 `;
 
-const stages = ["Get User's Information", "Select Dates and Cabin"];
+const stages = ["Get Guest's Details", "Select Cabin and Stay Duration"];
 
 function CreateBooking() {
   const { register, handleSubmit, formState, reset } = useForm();
@@ -64,26 +66,23 @@ function CreateBooking() {
   const navigate = useNavigate();
 
   const [level, setLevel] = useState(0);
-  const [userData, setUserData] = useState(null);
+  const [guestData, setGuestData] = useState(null);
   const [bookingData, setBookingData] = useState(null);
   const isLoading = isCreating || isBooking;
 
   function nextLevel(data) {
-    setUserData(data);
+    setGuestData(data);
     setLevel((curr) => curr + 1);
   }
 
   function bookCabin() {
-    console.log(userData);
-    console.log(bookingData);
-
-    createGuest(userData, {
+    if (bookingData.length < 6) return;
+    createGuest(guestData, {
       onSuccess: (data) => {
         createBooking(
           { ...bookingData, guestId: data.guestId },
           {
             onSuccess: () => {
-              toast.success("Cabin booked successfully");
               navigate(`/bookings`);
             },
           }
@@ -111,7 +110,7 @@ function CreateBooking() {
             </LevelTag>
           ))}
         </TagContainers>
-        <StageHeading as="h3">{stages[level]}</StageHeading>
+        <StageHeading as="h1">{stages[level]}</StageHeading>
 
         {level === 0 && (
           <CreateGuestForm

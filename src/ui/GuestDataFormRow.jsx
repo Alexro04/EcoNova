@@ -5,13 +5,13 @@ import { Children } from "react";
 const StyledFormRow = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
   position: relative;
 `;
 
 const Icon = styled.span`
   position: absolute;
-  top: 46px;
+  top: 40px;
   left: 10px;
 
   & svg {

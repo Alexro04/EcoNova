@@ -9,11 +9,15 @@ function useBookCabin() {
     isPending,
     error,
   } = useMutation({
-    mutationFn: (data) => createBookingApi(data),
+    mutationFn: (data) =>
+      toast.promise(createBookingApi(data), {
+        success: "Cabin Booked successfully",
+        loading: "Booking cabin...",
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
-    onError: () => toast.error("An error occured while booking the cabin"),
+    onError: () => toast.error("An error occured while booking cabin"),
   });
 
   return { createBooking, isPending, error };

@@ -1,5 +1,12 @@
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiEye,
+  HiOutlineTrash,
+} from "react-icons/hi2";
 
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
@@ -7,17 +14,11 @@ import Table from "../../ui/Table";
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import Menus from "../../ui/Menus";
-import {
-  HiArrowDownOnSquare,
-  HiArrowUpOnSquare,
-  HiEye,
-  HiOutlineTrash,
-} from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
 import useCheckout from "../check-in-out/useCheckout";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useDeleteBooking from "./useDeleteBooking";
+import getDaysBetweenDates from "../../utils/getDaysBetweenDates";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -80,7 +81,7 @@ function BookingRow({
           {isToday(new Date(checkInDate))
             ? "Today"
             : formatDistanceFromNow(checkInDate)}{" "}
-          &rarr; {6} night stay
+          &rarr; {getDaysBetweenDates(checkOutDate, checkInDate)} night stay
         </span>
         <span>
           {format(new Date(checkInDate), "MMM dd yyyy")} &mdash;{" "}

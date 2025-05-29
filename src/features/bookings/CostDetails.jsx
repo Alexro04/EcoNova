@@ -8,12 +8,15 @@ const StyledCostDetails = styled.div`
 `;
 
 const CostRow = styled.div`
+  font-size: 14px;
+  font-style: italic;
   display: flex;
   justify-content: space-between;
 
   &:last-child {
-    border-top: 1px solid var(--color-grey-100);
+    border-top: 1px solid var(--color-grey-300);
     padding-top: 8px;
+    font-weight: 800;
   }
 `;
 

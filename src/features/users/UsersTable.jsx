@@ -1,11 +1,14 @@
 import Menus from "../../ui/Menus";
+import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import useAdminUsers from "./useAdminUsers";
 import UserRow from "./UserRow";
 
 function UsersTable() {
-  const { admins } = useAdminUsers();
+  const { admins, isPending } = useAdminUsers();
   console.log(admins);
+
+  if (isPending) return <Spinner />;
 
   return (
     <Menus>

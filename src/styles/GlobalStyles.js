@@ -123,35 +123,13 @@ body {
   width: fit-content;
 }
 
-.rdrDefinedRangesWrapper {
-  width: 180px;
-  border-right: 1px solid var(--color-grey-200);
-}
-
-.rdrStaticRange {
-  border-bottom: 1px solid var(--color-grey-200);
-}
 
 .rdrDateDisplayWrapper, .rdrMonthAndYearWrapper, .rdrMonth, .rdrDateRangeWrapper, .rdrDefinedRangesWrapper {
   background-color: var(--color-grey-0);
 }
 
-.rdrInputRangeInput {
-  background-color: var(--color-grey-0);
-  border: solid 1px var(--color-grey-100);
-  color: var(--color-grey-700);
-}
-
-.rdrInputRangeInput:active, .rdrInputRangeInput:hover {
-  color: var(--color-grey-700);
-}
-
-.rdrStaticRangeLabel {
-  background-color: var(--color-grey-0);
-}
-
-.rdrStaticRange:hover .rdrStaticRangeLabel, .rdrStaticRange:focus .rdrStaticRangeLabel, .rdrDayDisabled {
-    background: var(--color-grey-100);
+.rdrDayDisabled {
+  background: var(--color-grey-100);
 }
 
 .rdrDayNumber span {
@@ -179,10 +157,6 @@ body {
 
 .rdrDayPassive .rdrDayNumber span {
   color: var(--color-grey-300);
-}
-
-.rdrMonthName {
-  text-align: center;
 }
 
 .rdrNextPrevButton {

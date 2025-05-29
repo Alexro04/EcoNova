@@ -3,40 +3,46 @@ import Input from "../../ui/Input";
 import Checkbox from "../../ui/Checkbox";
 
 const Select = styled.select`
-  padding: 6px 12px;
+  border: 1px solid var(--color-grey-300);
+  border-radius: 5px;
+  padding: 8px 12px;
   background-color: var(--color-grey-0);
 `;
 
 const SelectCabin = styled.div`
   display: grid;
-  grid-template-columns: 18rem 1fr;
+  grid-template-columns: 14rem 1fr;
   align-items: center;
 `;
 
 const StyledRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 5rem;
   align-items: center;
 
   & div {
     display: grid;
-    gap: 8px;
+    gap: 4px;
     align-items: center;
+  }
+  & div input {
+    min-width: 18rem;
   }
 `;
 
 const StyledBookForm = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2.6rem;
+  gap: 2rem;
 `;
 
 const Box = styled.div`
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
-  padding: 2rem 4rem;
+  padding: 1.5rem 3rem;
+  font-size: 14px;
 `;
 
 function BookCabinForm({
@@ -52,8 +58,9 @@ function BookCabinForm({
   return (
     <StyledBookForm>
       <SelectCabin>
-        <span>Select A Cabin</span>
+        <label id="select-cabin">Select A Cabin</label>
         <Select
+          id="select-cabin"
           onChange={(e) => setSelectedCabinId(e.target.value)}
           value={selectedCabinId}>
           {cabins.map((cabin) => (
@@ -85,7 +92,7 @@ function BookCabinForm({
           checked={includesBreakfast}
           onChange={() => setIncludesBreakfast((includes) => !includes)}
           id="breakfast">
-          Add Breakfast Cost
+          Add breakfast cost
         </Checkbox>
       </Box>
     </StyledBookForm>

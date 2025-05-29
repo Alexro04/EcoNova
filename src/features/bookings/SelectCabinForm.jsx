@@ -1,38 +1,37 @@
 import { useEffect, useMemo, useState } from "react";
 import { DateRange } from "react-date-range";
+import { addDays } from "date-fns";
 import styled from "styled-components";
 
-import useCabin from "../features/cabins/useCabin";
-import Spinner from "./Spinner";
-import useSetting from "../features/settings/useSettings";
-import getDaysBetweenDates from "../utils/getDaysBetweenDates";
-import CostDetails from "../features/bookings/CostDetails";
-import BookCabinForm from "../features/bookings/BookCabinForm";
-import { addDays } from "date-fns";
+import useCabin from "../cabins/useCabin";
+import Spinner from "../../ui/Spinner";
+import useSetting from "../settings/useSettings";
+import CostDetails from "./CostDetails";
+import BookCabinForm from "./BookCabinForm";
+import getDaysBetweenDates from "../../utils/getDaysBetweenDates";
 
 const DetailsForm = styled.div`
   display: grid;
-  /* gap: 3.2rem; */
   grid-template-columns: 1.4fr 1fr;
 `;
 
 const DateRangeContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding: 12px;
+  padding: 12px 0 0 0;
 `;
 
 const StyledCabinDetails = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: 12px 0 0 52px;
 `;
 
 function SelectCabinForm({ setBookingData }) {
   const { data, isPending } = useCabin();
   const cabins = data?.data;
-  const { settings } = useSetting();
+  const { settings, isLoading } = useSetting();
 
   const [selectedCabinId, setSelectedCabinId] = useState(
     cabins ? cabins[0]?._id : ""
@@ -65,9 +64,9 @@ function SelectCabinForm({ setBookingData }) {
       numGuests,
       bookingCost,
       extraCost: breakfastPrice,
-      cabinId: selectedCabinId,
+      cabinId: selectedCabin?._id,
     };
-  }, [dateState, numGuests, bookingCost, breakfastPrice, selectedCabinId]);
+  }, [dateState, numGuests, bookingCost, breakfastPrice, selectedCabin?._id]);
 
   useEffect(
     function () {
@@ -76,14 +75,14 @@ function SelectCabinForm({ setBookingData }) {
     [bookingData, setBookingData]
   );
 
-  if (isPending) return <Spinner />;
+  if (isPending || isLoading) return <Spinner />;
 
   return (
     <DetailsForm>
       <StyledCabinDetails>
         <BookCabinForm
           cabins={cabins}
-          selectedCabinId={selectedCabin}
+          selectedCabinId={selectedCabinId}
           includesBreakfast={includesBreakfast}
           numGuests={numGuests}
           numNights={numNights}
@@ -107,16 +106,16 @@ function SelectCabinForm({ setBookingData }) {
           onChange={(item) => setDateState([item.selection])}
           moveRangeOnFirstSelection={false}
           ranges={dateState}
-          direction="horizontal"
           showMonthArrow={true}
           minDate={new Date()}
           maxDate={
-            addDays(
-              dateState[0].startDate,
-              settings?.maxNightsPerBooking - 1
-            ) || new Date()
+            settings?.maxNightsPerBooking
+              ? addDays(
+                  dateState[0].startDate,
+                  settings?.maxNightsPerBooking - 1
+                ) || new Date()
+              : undefined
           }
-          // maxNightsPerBooking
         />
       </DateRangeContainer>
     </DetailsForm>

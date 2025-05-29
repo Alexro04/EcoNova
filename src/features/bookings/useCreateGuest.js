@@ -8,8 +8,11 @@ function useCreateGuest() {
     isPending,
     error,
   } = useMutation({
-    mutationFn: (data) => createGuestApi(data),
-    onError: () => toast.error("An error occured while creating guest"),
+    mutationFn: (data) =>
+      toast.promise(createGuestApi(data), {
+        loading: "Uploading guest data...",
+      }),
+    onError: () => toast.error(`An error occured while uploading guest data`),
   });
 
   return { createGuest, isPending, error };
