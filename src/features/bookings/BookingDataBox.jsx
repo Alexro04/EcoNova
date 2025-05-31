@@ -80,7 +80,7 @@ const Price = styled.div`
       ? "var(--color-green-100)"
       : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid === "no"
+    props.isPaid === "yes"
       ? "var(--color-green-700)"
       : "var(--color-yellow-700)"};
 
