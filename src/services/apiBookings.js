@@ -1,5 +1,6 @@
 import axios from "axios";
 import { PAGE_LIMIT } from "../utils/constants";
+import { getToday } from "../utils/helpers";
 
 const BASE_URL = "http://localhost:3000/econova/api/bookings";
 
@@ -15,6 +16,40 @@ export async function getBookings({ filter, sort, page }) {
 
   try {
     const response = await axios.get(query);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function getBookingsAfterDate(date) {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/bookings-between-dates?afterDate=${date}&beforeDate=${getToday()}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function getStaysAfterDate({ date }) {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/stays-between-dates?afterDate=${date}&beforeDate=${getToday()}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+}
+
+export async function getTodayActivities() {
+  try {
+    const response = await axios.get(`${BASE_URL}/today-activities`);
     return response.data;
   } catch (error) {
     console.log(error.message);

@@ -13,8 +13,8 @@ import { useEffect, useState } from "react";
 import useBooking from "../bookings/useBooking";
 import Spinner from "../../ui/Spinner";
 import useSetting from "../settings/useSettings";
-import getDaysBetweenDates from "../../utils/getDaysBetweenDates";
 import useCheckIn from "./useCheckIn";
+import { getDaysBetweenDates } from "../../utils/helpers";
 
 const Box = styled.div`
   /* Box */

@@ -63,7 +63,7 @@ function BookCabinForm({
           id="select-cabin"
           onChange={(e) => setSelectedCabinId(e.target.value)}
           value={selectedCabinId}>
-          {cabins.map((cabin) => (
+          {cabins?.map((cabin) => (
             <option key={cabin._id} value={cabin._id}>
               {cabin.name}
             </option>

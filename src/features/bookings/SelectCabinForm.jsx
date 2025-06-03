@@ -8,7 +8,7 @@ import Spinner from "../../ui/Spinner";
 import useSetting from "../settings/useSettings";
 import CostDetails from "./CostDetails";
 import BookCabinForm from "./BookCabinForm";
-import getDaysBetweenDates from "../../utils/getDaysBetweenDates";
+import { getDaysBetweenDates } from "../../utils/helpers";
 
 const DetailsForm = styled.div`
   display: grid;
@@ -29,8 +29,7 @@ const StyledCabinDetails = styled.div`
 `;
 
 function SelectCabinForm({ setBookingData }) {
-  const { data, isPending } = useCabin();
-  const cabins = data?.data;
+  const { cabins, isPending } = useCabin();
   const { settings, isLoading } = useSetting();
 
   const [selectedCabinId, setSelectedCabinId] = useState(
@@ -54,7 +53,7 @@ function SelectCabinForm({ setBookingData }) {
   const breakfastPrice = includesBreakfast
     ? settings?.breakfastPrice * numNights * numGuests
     : 0;
-  const bookingCost = selectedCabin?.price * numNights * numGuests;
+  const bookingCost = selectedCabin?.price * numNights;
   const totalCost = breakfastPrice + bookingCost;
 
   const bookingData = useMemo(() => {
@@ -107,7 +106,7 @@ function SelectCabinForm({ setBookingData }) {
           moveRangeOnFirstSelection={false}
           ranges={dateState}
           showMonthArrow={true}
-          minDate={new Date()}
+          // minDate={new Date()}
           maxDate={
             settings?.maxNightsPerBooking
               ? addDays(

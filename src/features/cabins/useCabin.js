@@ -7,5 +7,5 @@ export default function useCabin() {
     queryFn: getAllCabins,
   });
 
-  return { data, isPending };
+  return { cabins: data?.data, isPending };
 }

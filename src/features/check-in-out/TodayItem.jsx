@@ -1,4 +1,11 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+import Tag from "../../ui/Tag";
+import { Flag } from "../../ui/Flag";
+import Button from "../../ui/Button";
+import CheckoutButton from "../check-in-out/CheckoutButton";
+import { getCountryCode, getDaysBetweenDates } from "../../utils/helpers";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -18,3 +25,47 @@ const StyledTodayItem = styled.li`
 const Guest = styled.div`
   font-weight: 500;
 `;
+
+function TodayItem({ booking }) {
+  console.log(getCountryCode("Nigeria"));
+  const {
+    _id: id,
+    guestId: { fullname, nationality },
+    status,
+    checkInDate,
+    checkOutDate,
+  } = booking;
+  const numNights = getDaysBetweenDates(checkOutDate, checkInDate);
+
+  const countryCode = getCountryCode(nationality);
+  console.log(
+    `https://flagcdn.com/20x15/${
+      countryCode === "unkown" ? "ng" : countryCode.toLowerCase()
+    }.png`
+  );
+  return (
+    <StyledTodayItem>
+      {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
+      {status === "checked-in" && <Tag type="blue">Departing</Tag>}
+      <Flag
+        src={`https://flagcdn.com/20x15/${
+          countryCode === "unknown" ? "ng" : countryCode.toLowerCase()
+        }.png`}
+      />
+      <Guest>{fullname}</Guest>
+      <div>{numNights}</div>
+      {status === "unconfirmed" && (
+        <Button
+          size="small"
+          variation="primary"
+          as={Link}
+          to={`/check-in/${id}`}>
+          check in
+        </Button>
+      )}
+      {status === "checked-in" && <CheckoutButton bookingId={id} />}
+    </StyledTodayItem>
+  );
+}
+
+export default TodayItem;

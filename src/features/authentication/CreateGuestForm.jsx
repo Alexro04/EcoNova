@@ -31,17 +31,15 @@ function CreateGuestForm({ errors, register }) {
         <StyledInput
           type="text"
           id="fullname"
-          value="testeterian"
           {...register("fullname", { required: "This Field is required" })}
         />
       </GuestDataFormRow>
 
       <GuestDataFormRow
-        label="Nationality"
+        label="Country"
         error={errors?.nationality?.message}
         icon={<HiOutlineFlag />}>
         <StyledInput
-          value="testarian"
           type="text"
           id="nationality"
           {...register("nationality", { required: "This Field is required" })}
@@ -53,7 +51,6 @@ function CreateGuestForm({ errors, register }) {
         error={errors?.email?.message}
         icon={<HiOutlineMail />}>
         <StyledInput
-          value="testing12@testmail.test"
           type="text"
           id="email"
           {...register("email", {
@@ -71,7 +68,6 @@ function CreateGuestForm({ errors, register }) {
         error={errors?.phoneNumber?.message}
         icon={<HiOutlinePhone />}>
         <StyledInput
-          value="777765432"
           type="text"
           id="phoneNumber"
           {...register("phoneNumber", { required: "This Field is required" })}
@@ -83,7 +79,6 @@ function CreateGuestForm({ errors, register }) {
         error={errors?.nationalId?.message}
         icon={<HiOutlineIdentification />}>
         <StyledInput
-          value="12345678"
           type="text"
           id="nationalId"
           {...register("nationalId", { required: "This Field is required" })}

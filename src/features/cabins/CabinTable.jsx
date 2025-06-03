@@ -7,7 +7,7 @@ import CabinRow from "./CabinRow";
 import useCabin from "./useCabin";
 
 function CabinTable() {
-  const { data: cabins, isPending } = useCabin();
+  const { cabins, isPending } = useCabin();
   const [searchParams] = useSearchParams();
 
   if (isPending) return <Spinner />;
@@ -15,11 +15,11 @@ function CabinTable() {
   //filter
   const filterValue = searchParams.get("discount") || "all";
   let filteredCabins;
-  if (filterValue === "all") filteredCabins = cabins?.data;
+  if (filterValue === "all") filteredCabins = cabins;
   if (filterValue === "no-discount")
-    filteredCabins = cabins?.data.filter((cabin) => cabin.discount === 0);
+    filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
   if (filterValue === "with-discount")
-    filteredCabins = cabins?.data.filter((cabin) => cabin.discount > 0);
+    filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
 
   //Sort
   const sortBy = searchParams.get("sortBy") || "capacity";

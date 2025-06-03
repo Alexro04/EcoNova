@@ -9,8 +9,12 @@ import {
 
 import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
-import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
-import getDaysBetweenDates from "../../utils/getDaysBetweenDates";
+import {
+  formatDistanceFromNow,
+  formatCurrency,
+  getDaysBetweenDates,
+  getCountryCode,
+} from "../../utils/helpers";
 
 const DataBox = styled.section`
   /* Box */
@@ -113,20 +117,15 @@ function BookingDataBox({ booking, includesBreakfast, breakfastPrice }) {
     bookingCost,
     hasPaid,
     extraCost = 0,
-    observations = "This plave s a beru shiruopw ojfnosubfpns dojs usbojc ojsboud ojsbbpisn sbifpisnd ojbspinff",
-    guestId: {
-      fullname: guestName = "Alexro",
-      email = "ajakatomi@gmail.com",
-      country = "Nigeria",
-      countryFlag,
-      nationalID = 234348289755,
-    } = {},
+    observations = "No Observations",
+    guestId: { fullname: guestName, email, nationality, nationalId } = {},
     cabinId: { name: cabinName } = {},
   } = booking || {};
 
   const numNights = getDaysBetweenDates(checkOutDate, checkInDate);
   const hasBreakfast = extraCost > 0 || includesBreakfast;
   const totalCost = extraCost + bookingCost;
+  const countryCode = getCountryCode(nationality);
 
   return (
     <DataBox>
@@ -149,14 +148,21 @@ function BookingDataBox({ booking, includesBreakfast, breakfastPrice }) {
 
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {countryCode && (
+            <Flag
+              src={`https://flagcdn.com/20x15/${
+                countryCode === "unknown" ? "ng" : countryCode.toLowerCase()
+              }.png`}
+              alt={`Flag of ${nationality}`}
+            />
+          )}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>
           <span>&bull;</span>
           <p>{email}</p>
           <span>&bull;</span>
-          <p>National ID {nationalID}</p>
+          <p>National ID {nationalId}</p>
         </Guest>
 
         {observations && (

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { useMoveBack } from "../../hooks/useMoveBack";
+import { useNavigate } from "react-router-dom";
 import BookingDataBox from "./BookingDataBox";
 import Line from "../../ui/Line";
 import Heading from "../../ui/Heading";
@@ -7,11 +9,8 @@ import Tag from "../../ui/Tag";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
-
-import { useMoveBack } from "../../hooks/useMoveBack";
 import useBooking from "./useBooking";
 import Spinner from "../../ui/Spinner";
-import { useNavigate } from "react-router-dom";
 import CheckoutButton from "../check-in-out/CheckoutButton";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
@@ -52,6 +51,16 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
+        {status === "unconfirmed" && (
+          <Button
+            variation="primary"
+            size="medium"
+            onClick={() => navigate(`/check-in/${id}`)}>
+            Check in
+          </Button>
+        )}
+        {status === "checked-in" && <CheckoutButton bookingId={id} />}
+
         <Modal>
           <Modal.Open opens="delete-booking">
             <Button variation="danger" size="medium">
@@ -69,19 +78,6 @@ function BookingDetail() {
             />
           </Modal.Window>
         </Modal>
-
-        {status === "unconfirmed" && (
-          <Button
-            variation="primary"
-            size="medium"
-            onClick={() => navigate(`/check-in/${id}`)}>
-            Check in
-          </Button>
-        )}
-        {status === "checked-in" && <CheckoutButton bookingId={id} />}
-        <Button variation="secondary" size="medium" onClick={moveBack}>
-          Back
-        </Button>
       </ButtonGroup>
     </>
   );

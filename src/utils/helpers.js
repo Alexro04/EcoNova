@@ -1,5 +1,19 @@
 import { formatDistance, parseISO } from "date-fns";
 import { differenceInDays } from "date-fns";
+import countries from "i18n-iso-countries";
+import countrydata from "i18n-iso-countries/langs/en.json";
+
+countries.registerLocale(countrydata);
+
+export function getCountryCode(countryName) {
+  return countries.getAlpha2Code(countryName, "en") || "unknown";
+}
+
+export function getDaysBetweenDates(date1, date2) {
+  const oneDayInMs = 1000 * 60 * 60 * 24;
+  const diffInMs = Math.abs(new Date(date2) - new Date(date1));
+  return Math.floor(diffInMs / oneDayInMs);
+}
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
 export const subtractDates = (dateStr1, dateStr2) =>

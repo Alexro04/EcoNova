@@ -41,7 +41,12 @@ function SortBy({ options }) {
 function SortOrder({ options }) {
   const { sortOrder, handleSortOrder } = useContext(SortContext);
   return (
-    <Select value={sortOrder} onChange={handleSortOrder} options={options} />
+    <Select
+      type="white"
+      value={sortOrder}
+      onChange={handleSortOrder}
+      options={options}
+    />
   );
 }
 

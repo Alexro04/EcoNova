@@ -21,7 +21,7 @@ function Bookings() {
       </Line>
       <BookingTable />
       <Button variation="primary" size="medium" onClick={handleClick}>
-        Create a booking
+        Book a Cabin
       </Button>
     </>
   );
