@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "./Button";
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
@@ -30,8 +31,19 @@ const Box = styled.div`
   }
 `;
 
-function ErrorFallback({ error }) {
-  return <StyledErrorFallback>{error}</StyledErrorFallback>;
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <StyledErrorFallback>
+      <Box>
+        <p>This is a fallback component na</p>
+        {error}{" "}
+        <Button variation="primary" size="medium" onClick={resetErrorBoundary}>
+          Return to homepage
+        </Button>
+      </Box>
+      qqwghjm,./
+    </StyledErrorFallback>
+  );
 }
 
 export default ErrorFallback;

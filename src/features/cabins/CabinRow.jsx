@@ -12,6 +12,7 @@ import ConfirmDelete from "../../ui/ConfirmDelete";
 import { deleteCabin as deleteCabinApi } from "../../services/apiCabins";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import Carousel from "../../ui/Carousel";
 
 const Img = styled.img`
   display: block;
@@ -20,6 +21,13 @@ const Img = styled.img`
   object-fit: cover;
   object-position: center;
   transform: scale(1.5) translateX(-7px);
+`;
+
+const ImageContainer = styled.div`
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
 `;
 
 const Cabin = styled.div`
@@ -71,7 +79,16 @@ function CabinRow({ cabin }) {
 
   return (
     <Table.Row>
-      <Img src={cabinPictures[0].url} />
+      <Modal>
+        <Modal.Open opens="picture">
+          <ImageContainer>
+            <Img src={cabinPictures[0].url} />
+          </ImageContainer>
+        </Modal.Open>
+        <Modal.Window name="picture" type="carousel">
+          <Carousel pictures={cabinPictures} />
+        </Modal.Window>
+      </Modal>
       <Cabin>{name}</Cabin>
       <div>fits up to {capacity} people</div>
       <Price>{formatCurrency(price)}</Price>

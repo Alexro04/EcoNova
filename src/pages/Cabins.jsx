@@ -13,6 +13,7 @@ const ButtonContainer = styled.div`
 `;
 
 function Cabins() {
+  isPending = "penogin";
   return (
     <>
       <Line type="horizontal">

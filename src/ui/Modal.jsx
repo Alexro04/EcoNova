@@ -1,6 +1,6 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { LiaTimesSolid } from "react-icons/lia";
 
 import useOutsideClick from "../hooks/useOutsideClick";
@@ -10,10 +10,20 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--color-grey-0);
+  ${(props) =>
+    props.type === "carousel" &&
+    css`
+      background-color: var(--color-grey-100);
+    `}
+  ${(props) =>
+    props.type !== "carousel" &&
+    css`
+      background-color: var(--color-grey-0);
+      padding: 3.2rem 4rem;
+    `}
+ 
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: 3.2rem 4rem;
   transition: all 0.5s;
 `;
 
@@ -74,7 +84,7 @@ function Open({ children, opens }) {
   return cloneElement(children, { onClick: () => openWindow(opens) });
 }
 
-function Window({ children, name }) {
+function Window({ children, name, type }) {
   const { selectedWindow, closeWindow } = useContext(ModalContext);
   const ref = useOutsideClick(closeWindow);
 
@@ -82,7 +92,7 @@ function Window({ children, name }) {
     selectedWindow === name &&
     createPortal(
       <Overlay>
-        <StyledModal ref={ref}>
+        <StyledModal ref={ref} type={type}>
           <Button onClick={closeWindow}>
             <LiaTimesSolid />
           </Button>

@@ -7,7 +7,7 @@ import CabinRow from "./CabinRow";
 import useCabin from "./useCabin";
 
 function CabinTable() {
-  const { cabins, isPending } = useCabin();
+  let { cabins, isPending } = useCabin();
   const [searchParams] = useSearchParams();
 
   if (isPending) return <Spinner />;
