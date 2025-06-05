@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const BASE_URL = "http://localhost:3000/econova/api/settings";
+import api from "./api";
 
 export async function getSettings() {
   try {
-    const response = await axios.get(`${BASE_URL}/get`);
+    const response = await api.get(`/settings/get`);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -14,7 +12,7 @@ export async function getSettings() {
 
 export async function updateSettings(data) {
   try {
-    const res = await axios.post(`${BASE_URL}/update`, data);
+    const res = await api.post(`/settings/update`, data);
     return res;
   } catch (error) {
     console.log(error.message);

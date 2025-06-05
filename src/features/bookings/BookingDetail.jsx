@@ -1,7 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
-import { useNavigate } from "react-router-dom";
 import BookingDataBox from "./BookingDataBox";
 import Line from "../../ui/Line";
 import Heading from "../../ui/Heading";
@@ -15,6 +15,7 @@ import CheckoutButton from "../check-in-out/CheckoutButton";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useDeleteBooking from "./useDeleteBooking";
+import Empty from "../../ui/Empty";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -38,6 +39,12 @@ function BookingDetail() {
 
   if (isPending) return <Spinner />;
 
+  if (!booking)
+    return (
+      <Empty resource="Booking" type="resource">
+        <p>We could'nt find this Booking</p>
+      </Empty>
+    );
   return (
     <>
       <Line type="horizontal">

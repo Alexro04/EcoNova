@@ -111,7 +111,8 @@ function Menu({ children }) {
 function Toogle({ id }) {
   const { currentOpen, open, close } = useContext(MenuContext);
 
-  function handleClick() {
+  function handleClick(e) {
+    e.stopPropagation();
     currentOpen === "" || currentOpen != id ? open(id) : close();
   }
 

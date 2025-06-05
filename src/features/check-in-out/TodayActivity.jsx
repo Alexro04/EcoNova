@@ -7,7 +7,6 @@ import Spinner from "../../ui/Spinner";
 import TodayItem from "./TodayItem";
 
 const StyledToday = styled.div`
-  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
@@ -41,7 +40,6 @@ const NoActivity = styled.p`
 
 function TodayActivity() {
   const { activities, isPending } = useTodayActivities();
-  console.log(activities);
   return (
     <StyledToday>
       <Line type="horizontal">

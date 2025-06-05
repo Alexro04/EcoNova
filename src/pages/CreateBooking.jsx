@@ -71,7 +71,8 @@ function CreateBooking() {
   const isLoading = isCreating || isBooking;
 
   function nextLevel(data) {
-    setGuestData(data);
+    const { nationalId, phoneNumber, email, fullname, nationality } = data;
+    setGuestData({ nationalId, phoneNumber, email, fullname, nationality });
     setLevel((curr) => curr + 1);
   }
 
@@ -112,14 +113,7 @@ function CreateBooking() {
         </TagContainers>
         <StageHeading as="h1">{stages[level]}</StageHeading>
 
-        {level === 0 && (
-          <CreateGuestForm
-            register={register}
-            handleSubmit={handleSubmit}
-            reset={reset}
-            errors={errors}
-          />
-        )}
+        {level === 0 && <CreateGuestForm register={register} errors={errors} />}
         {level === 1 && <SelectCabinForm setBookingData={setBookingData} />}
 
         <ButtonContainer>

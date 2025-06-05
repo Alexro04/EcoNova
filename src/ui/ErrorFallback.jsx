@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import Button from "./Button";
+import GlobalStyle from "../styles/GlobalStyles";
+import { HiOutlineHome } from "react-icons/hi2";
 
 const StyledErrorFallback = styled.main`
-  height: 100vh;
+  height: 100dvh;
   background-color: var(--color-grey-50);
   display: flex;
+  gap: 24px;
   align-items: center;
   justify-content: center;
   padding: 4.8rem;
 `;
 
-const Box = styled.div`
-  /* Box */
+const Error = styled.div`
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
@@ -31,18 +33,25 @@ const Box = styled.div`
   }
 `;
 
+const Img = styled.img`
+  height: 32rem;
+`;
+
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
-    <StyledErrorFallback>
-      <Box>
-        <p>This is a fallback component na</p>
-        {error}{" "}
-        <Button variation="primary" size="medium" onClick={resetErrorBoundary}>
-          Return to homepage
-        </Button>
-      </Box>
-      qqwghjm,./
-    </StyledErrorFallback>
+    <>
+      <GlobalStyle />
+      <StyledErrorFallback>
+        <Img src="error-bot.png" />
+        <Error>
+          <h1>Ooops! An Error Occurred</h1>
+          <p>{error.message}</p>
+          <Button variation="primary" size="large" onClick={resetErrorBoundary}>
+            Return to HomePage
+          </Button>
+        </Error>
+      </StyledErrorFallback>
+    </>
   );
 }
 

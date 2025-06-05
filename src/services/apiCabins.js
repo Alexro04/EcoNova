@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const BASE_URL = "http://localhost:3000/econova/api/cabins";
+import api from "./api";
 
 export async function getAllCabins() {
   try {
-    const response = await axios.get(`${BASE_URL}/all-cabins`);
+    const response = await api.get(`/cabins/all-cabins`);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -14,7 +12,7 @@ export async function getAllCabins() {
 
 export async function deleteCabin(id) {
   try {
-    const res = await axios.delete(`${BASE_URL}/delete/${id}`);
+    const res = await api.delete(`/cabins/delete/${id}`);
     return res;
   } catch (error) {
     console.log(error);
@@ -25,7 +23,7 @@ export async function deleteCabin(id) {
 export async function addCabin(cabin) {
   try {
     const formData = createFormData(cabin);
-    const res = await axios.post(`${BASE_URL}/upload`, formData, {
+    const res = await api.post(`/cabins/upload`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -40,7 +38,7 @@ export async function addCabin(cabin) {
 export async function editCabin(cabin, id) {
   try {
     const formData = createFormData(cabin);
-    const res = await axios.post(`${BASE_URL}/update/${id}`, formData, {
+    const res = await api.post(`/cabins/update/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

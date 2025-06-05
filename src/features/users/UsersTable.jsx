@@ -6,7 +6,6 @@ import UserRow from "./UserRow";
 
 function UsersTable() {
   const { admins, isPending } = useAdminUsers();
-  console.log(admins);
 
   if (isPending) return <Spinner />;
 

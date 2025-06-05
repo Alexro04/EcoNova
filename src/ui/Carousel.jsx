@@ -30,6 +30,7 @@ const Slide = styled.div`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
   & img {
+    max-height: 52rem;
     width: 100%;
     display: block;
   }
@@ -81,7 +82,6 @@ function Carousel({ pictures }) {
     if (!el) return;
     setShowNext(el.scrollLeft > 10);
     setShowPrev(el.scrollLeft + el.clientWidth < el.scrollWidth);
-    console.log(el.scrollLeft, el.clientWidth, el.scrollWidth);
   }
 
   function scrollCarousel(direction) {
@@ -119,12 +119,12 @@ function Carousel({ pictures }) {
       </Container>
 
       {showPrev && (
-        <Button type="next" onClick={() => scrollCarousel(1)}>
+        <Button $type="next" onClick={() => scrollCarousel(1)}>
           <FaArrowRight />
         </Button>
       )}
       {showNext && (
-        <Button type="prev" onClick={() => scrollCarousel(-1)}>
+        <Button $type="prev" onClick={() => scrollCarousel(-1)}>
           <FaArrowLeft />
         </Button>
       )}

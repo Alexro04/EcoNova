@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const BASE_URL = "http://localhost:3000/econova/api/auth";
+import api from "./api";
 
 export async function login(credentials) {
   try {
-    const response = await axios.post(`${BASE_URL}/login`, credentials);
+    const response = await api.post(`/auth/login`, credentials);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -15,7 +13,7 @@ export async function login(credentials) {
 export async function createUser(newUser) {
   try {
     console.log("New admin", newUser);
-    const response = await axios.post(`${BASE_URL}/register`, newUser);
+    const response = await api.post(`/auth/register`, newUser);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -26,15 +24,11 @@ export async function createUser(newUser) {
 export async function updateUserData(update, userId) {
   try {
     const formData = createFormData(update);
-    const res = await axios.post(
-      `${BASE_URL}/update-data/${userId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const res = await api.post(`/auth/update-data/${userId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res.data;
   } catch (error) {
     console.log(error.message);
@@ -44,8 +38,7 @@ export async function updateUserData(update, userId) {
 
 export async function createGuest(guest) {
   try {
-    console.log("New guest", guest);
-    const response = await axios.post(`${BASE_URL}/create-guest`, guest);
+    const response = await api.post(`/auth/create-guest`, guest);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -55,10 +48,7 @@ export async function createGuest(guest) {
 
 export async function updateUserPassword(update, userId) {
   try {
-    const res = await axios.post(
-      `${BASE_URL}/update-password/${userId}`,
-      update
-    );
+    const res = await api.post(`/auth/update-password/${userId}`, update);
     return res;
   } catch (error) {
     console.log(error.message);
@@ -68,7 +58,7 @@ export async function updateUserPassword(update, userId) {
 
 export async function getAdmins() {
   try {
-    const response = await axios.get(`${BASE_URL}/users/admin`);
+    const response = await api.get(`/auth/users/admin`);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -76,11 +66,9 @@ export async function getAdmins() {
   }
 }
 
-export async function getUser(access_token) {
+export async function getUser() {
   try {
-    const response = await axios.get(`${BASE_URL}/user`, {
-      headers: { Authorization: `Bearer ${access_token}` },
-    });
+    const response = await api.get(`/auth/user`);
     return response.data;
   } catch (error) {
     console.log(error.message);

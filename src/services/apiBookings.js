@@ -1,11 +1,9 @@
-import axios from "axios";
+import api from "./api";
 import { PAGE_LIMIT } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 
-const BASE_URL = "http://localhost:3000/econova/api/bookings";
-
 export async function getBookings({ filter, sort, page }) {
-  let query = `${BASE_URL}/all-bookings${filter || sort ? "?" : ""}`;
+  let query = `/bookings/all-bookings${filter || sort ? "?" : ""}`;
   if (filter) query = query + `${filter.name}=${filter.value}`;
   if (sort)
     query =
@@ -15,7 +13,7 @@ export async function getBookings({ filter, sort, page }) {
   if (page) query = query + `${sort ? "&" : ""}page=${page}`;
 
   try {
-    const response = await axios.get(query);
+    const response = await api.get(query);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -25,8 +23,8 @@ export async function getBookings({ filter, sort, page }) {
 
 export async function getBookingsAfterDate(date) {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/bookings-between-dates?afterDate=${date}&beforeDate=${getToday()}`
+    const response = await api.get(
+      `/bookings/bookings-between-dates?afterDate=${date}&beforeDate=${getToday()}`
     );
     return response.data;
   } catch (error) {
@@ -37,8 +35,8 @@ export async function getBookingsAfterDate(date) {
 
 export async function getStaysAfterDate({ date }) {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/stays-between-dates?afterDate=${date}&beforeDate=${getToday()}`
+    const response = await api.get(
+      `/bookings/stays-between-dates?afterDate=${date}&beforeDate=${getToday()}`
     );
     return response.data;
   } catch (error) {
@@ -49,7 +47,7 @@ export async function getStaysAfterDate({ date }) {
 
 export async function getTodayActivities() {
   try {
-    const response = await axios.get(`${BASE_URL}/today-activities`);
+    const response = await api.get(`/bookings/today-activities`);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -59,7 +57,7 @@ export async function getTodayActivities() {
 
 export async function getBooking(bookingId) {
   try {
-    const response = await axios.get(`${BASE_URL}/booking/${bookingId}`);
+    const response = await api.get(`/bookings/booking/${bookingId}`);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -69,10 +67,7 @@ export async function getBooking(bookingId) {
 
 export async function updateBooking(bookingId, updates) {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/update/${bookingId}`,
-      updates
-    );
+    const response = await api.post(`/bookings/update/${bookingId}`, updates);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -82,7 +77,7 @@ export async function updateBooking(bookingId, updates) {
 
 export async function deleteBooking(bookingId) {
   try {
-    const response = await axios.delete(`${BASE_URL}/delete/${bookingId}`);
+    const response = await api.delete(`/bookings/delete/${bookingId}`);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -92,7 +87,7 @@ export async function deleteBooking(bookingId) {
 
 export async function createBooking(data) {
   try {
-    const response = await axios.post(`${BASE_URL}/create`, {
+    const response = await api.post(`/bookings/create`, {
       ...data,
       status: "unconfirmed",
       hasPaid: false,

@@ -6,7 +6,6 @@ function useTodayActivities() {
     queryKey: ["activities"],
     queryFn: getTodayActivities,
   });
-  console.log(data);
   return { activities: data?.data, isPending };
 }
 

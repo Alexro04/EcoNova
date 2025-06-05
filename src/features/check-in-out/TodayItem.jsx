@@ -27,7 +27,6 @@ const Guest = styled.div`
 `;
 
 function TodayItem({ booking }) {
-  console.log(getCountryCode("Nigeria"));
   const {
     _id: id,
     guestId: { fullname, nationality },
@@ -38,11 +37,7 @@ function TodayItem({ booking }) {
   const numNights = getDaysBetweenDates(checkOutDate, checkInDate);
 
   const countryCode = getCountryCode(nationality);
-  console.log(
-    `https://flagcdn.com/20x15/${
-      countryCode === "unkown" ? "ng" : countryCode.toLowerCase()
-    }.png`
-  );
+
   return (
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
