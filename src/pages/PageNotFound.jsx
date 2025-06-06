@@ -1,16 +1,16 @@
 import styled from "styled-components";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 import { useMoveBack } from "../hooks/useMoveBack";
 import Empty from "../ui/Empty";
 import Button from "../ui/Button";
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
-const StyledPageNotFound = styled.main`
+const StyledPageNotFound = styled.div`
   height: 100vh;
   background-color: var(--color-grey-50);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 4.8rem;
 `;
 
@@ -19,8 +19,8 @@ function PageNotFound() {
 
   return (
     <StyledPageNotFound>
-      <Empty resource="Page" onClick={moveBack}>
-        <Heading as="h3">Oops! We could'nt find this Page.</Heading>
+      <Empty type="page" onClick={moveBack}>
+        <p as="h3">Oops! We could'nt find this Page.</p>
         <Button size="large" variation="primary" onClick={moveBack}>
           <MdOutlineArrowBackIosNew /> Go Back
         </Button>

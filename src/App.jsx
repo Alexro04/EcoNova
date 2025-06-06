@@ -19,6 +19,8 @@ import Account from "./pages/Account";
 import AuthLayer from "./context/AuthContext";
 import DarkModeProvider from "./context/DarkModeContext";
 import CreateBooking from "./pages/CreateBooking";
+import { useEffect, useState } from "react";
+import NotForSmallDevices from "./pages/NotForSmallDevices";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +31,27 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const [isMobileDevice, setIsMobileDevice] = useState(
+    window.matchMedia("(max-width: 1200px)").matches
+  );
+
+  useEffect(function () {
+    function updateSize() {
+      setIsMobileDevice(window.matchMedia("(max-width: 1200px)").matches);
+    }
+    window.addEventListener("resize", updateSize);
+
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  if (isMobileDevice)
+    return (
+      <>
+        <GlobalStyle />
+        <NotForSmallDevices />;
+      </>
+    );
+
   return (
     <DarkModeProvider>
       <QueryClientProvider client={queryClient}>

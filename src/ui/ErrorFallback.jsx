@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import GlobalStyle from "../styles/GlobalStyles";
-import { HiOutlineHome } from "react-icons/hi2";
+import { HiHome, HiOutlineHome } from "react-icons/hi2";
 
 const StyledErrorFallback = styled.main`
   height: 100dvh;
@@ -31,6 +31,16 @@ const Error = styled.div`
     margin-bottom: 3.2rem;
     color: var(--color-grey-500);
   }
+
+  button {
+    margin: auto;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    border-radius: 5px;
+  }
 `;
 
 const Img = styled.img`
@@ -47,7 +57,8 @@ function ErrorFallback({ error, resetErrorBoundary }) {
           <h1>Ooops! An Error Occurred</h1>
           <p>{error.message}</p>
           <Button variation="primary" size="large" onClick={resetErrorBoundary}>
-            Return to HomePage
+            <HiHome />
+            Return Home
           </Button>
         </Error>
       </StyledErrorFallback>
